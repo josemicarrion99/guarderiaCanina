@@ -1,0 +1,86 @@
+.register{
+    height: 100vh;
+    background-color: rgb(153, 95, 204);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .card{
+        width: 50%;
+        display: flex;
+        flex-direction: row-reverse; //con esto hago que la parte de la derecha salga a la izquierda y viicebersa
+        background-color: white;
+        border-radius: 10px;
+        min-height: 600px;
+        overflow: hidden;
+        .left{
+            //al ponerlo de esta forma si que me sale la imagen
+            // background-image:
+            // linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)),
+            // url('https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&w=1600');
+            // max-width: 100%;
+            // max-height: 100%;
+            // background-size: cover;
+            // color: white;
+            flex:1;
+            background: linear-gradient(rgb(219, 154, 219), rgb(239, 217, 239)), 
+            url("https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&w=1600") 
+            center;
+            background-size: cover;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            color:white;
+
+            h1{
+                font-size: 100px;
+                line-height: 100px;
+            }
+            p{
+                font-size: 14px;
+            }
+            //span{}
+            button{
+                width: 50%;
+                padding: 10px;
+                border: none;
+                background-color: white;
+                color:rebeccapurple;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
+        .right{
+            flex:1;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            gap:50px;
+            justify-content: center;
+            h1{
+                color:#555;
+            }
+            form{
+                display: flex;
+                flex-direction: column;
+                gap: 30px;
+
+                input{
+                    border:none;
+                    border-bottom: 1px solid lightgray;
+                    padding: 20px 10px;
+                }
+                button{
+                    width: 50%;
+                    padding:10px;
+                    border:none;
+                    background-color: #938eef;
+                    color: white;
+                    font-weight: bold;
+                    cursor: pointer;
+                }
+
+            }
+        }
+    }
+}
