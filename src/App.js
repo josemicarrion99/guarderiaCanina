@@ -6,6 +6,8 @@ import Leftbar from "./components/leftbar/Leftbar";
 import Rightbar from "./components/rightbar/Rightbar";
 import Navbar from "./components/navbar/Navbar";
 
+import "./style.scss"
+
 //  import "bootstrap/dist/css/bootstrap.min.css";
 
 import {
@@ -16,14 +18,19 @@ import {
   Outlet
 } from "react-router-dom";
 
+import { useContext } from "react";
+import { DarkModeContext } from "./context/darkModeContext";
+
 function App() {
 
   const currentUser = true;
 
+  const {darkMode} = useContext(DarkModeContext);
+
   //para que podamos añadir las barras a todas las pages que queramos
   const Layout = () =>{
     return(
-      <div>
+      <div className={`theme-${darkMode ? "dark" :"light"}`}>
         <Navbar/>
         <div style={{display:"flex"}}>
           <Leftbar/>

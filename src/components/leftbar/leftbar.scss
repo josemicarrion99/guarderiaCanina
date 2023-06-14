@@ -1,61 +1,66 @@
+@import "../../style.scss";
+
 .leftbar {
-    flex:2;
-    position: sticky;
-    top: 70px;
-    height: calc(100vh - 70px);
-    overflow: scroll;
+    @include themify($themes){
 
-    //esto quita la barra a la derecha para scrollear
-    &::-webkit-scrollbar{
-        display: none;
-    }
+        flex:2;
+        position: sticky;
+        top: 70px;
+        height: calc(100vh - 70px);
+        overflow: scroll;
+        background-color: themed("bg");
+        color: themed("textColor");
 
-    .container {
-        padding: 20px;
-
-        hr{
-            margin: 20px 0px;
-            border: none;
-            height: 0.5px;
-            background-color: lightpink;
+        //esto quita la barra a la derecha para scrollear
+        &::-webkit-scrollbar{
+            display: none;
         }
 
+        .container {
+            padding: 20px;
 
-
-        .menu {
-            display: flex;
-            flex-direction: column;
-            gap:20px;
-
-            span{
-                font-size: 12px;
-            }
-            
-            .user {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                img {
-                    width: 25px;
-                    height: 25px;
-                    border-radius: 50%;
-                    object-fit: cover;
-
-                }
-
-                span {
-                    font-size: 14px;
-                }
+            hr{
+                margin: 20px 0px;
+                border: none;
+                height: 2px;
+                background-color: themed("border");
             }
 
-            .item {
+            .menu {
                 display: flex;
-                align-items: center;
-                gap: 10px;
+                flex-direction: column;
+                gap:20px;
 
-                // img {}
+                span{
+                    font-size: 12px;
+                }
+                
+                .user {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    img {
+                        width: 25px;
+                        height: 25px;
+                        border-radius: 50%;
+                        object-fit: cover;
 
-                span {}
+                    }
+
+                    span {
+                        font-size: 14px;
+                    }
+                }
+
+                .item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+
+                    // img {}
+
+                    span {}
+                }
             }
         }
     }

@@ -12,15 +12,69 @@ const Rightbar = () => {
                             <img src="https://cdn.pixabay.com/photo/2023/05/20/19/58/woman-8007247_1280.jpg" alt="" />
                             <span>Jose</span>
                         </div>
-                            <div className="buttons">
+                        <div className="buttons">
                                 {/* <button class="btn btn-primary rounded-pill px-3">Follow</button>
                                 <button class="btn btn-danger rounded-pill px-3">Dismiss</button>   */}
-                                <button>Follow</button>
-                                <button>Dismiss</button> 
-                            </div>
+                            <button>Follow</button>
+                            <button>Dismiss</button> 
                         </div>
-                    <div className="item">
-                        <span>Latest activities:</span>
+                    </div>
+                </div>
+                <div className="item">
+                    <span>Latest activities</span>
+                    <div className="user" >
+                        <div className="userInfo">
+                            <img src="https://cdn.pixabay.com/photo/2023/05/20/19/58/woman-8007247_1280.jpg" alt="" />
+                            <p>
+                            <span>Jose </span>
+                            se acaba de unir
+                            </p>
+                        </div>
+                        <span>hace 1 minuto</span>
+                    </div>
+                    <div className="user" >
+                        <div className="userInfo">
+                            <img src="https://cdn.pixabay.com/photo/2023/05/20/19/58/woman-8007247_1280.jpg" alt="" />
+                            <p>
+                            <span>Jose </span>
+                            se acaba de unir
+                            </p>
+                        </div>
+                        <span>hace 1 minuto</span>
+                    </div>
+                    <div className="user" >
+                        <div className="userInfo">
+                            <img src="https://cdn.pixabay.com/photo/2023/05/20/19/58/woman-8007247_1280.jpg" alt="" />
+                            <p>
+                            <span>Jose </span>
+                            se acaba de unir
+                            </p>
+                        </div>
+                        <span>hace 1 minuto</span>
+                    </div>
+                </div>
+                <div className="item">
+                    <span>Conexiones</span>
+                    <div className="user" >
+                        <div className="userInfo">
+                            <img src="https://cdn.pixabay.com/photo/2023/05/20/19/58/woman-8007247_1280.jpg" alt="" />
+                            <div className="online"/>
+                            <span>Jose</span>
+                        </div>
+                    </div>
+                    <div className="user" >
+                        <div className="userInfo">
+                            <img src="https://cdn.pixabay.com/photo/2023/05/20/19/58/woman-8007247_1280.jpg" alt="" />
+                            <div className="online"/>
+                            <span>Jose</span>
+                        </div>
+                    </div>
+                    <div className="user" >
+                        <div className="userInfo">
+                            <img src="https://cdn.pixabay.com/photo/2023/05/20/19/58/woman-8007247_1280.jpg" alt="" />
+                            <div className="online"/>
+                            <span>Jose</span>
+                        </div>
                     </div>
                 </div>
             </div>

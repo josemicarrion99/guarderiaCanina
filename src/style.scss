@@ -1,0 +1,45 @@
+$themes:(
+    light:(
+        textColor: dark,
+        textColorSoft:#555,
+        bg: white,
+        bgSoft: #f6f3f3,
+        logo: darkblue,
+        border: lightgray,
+        shadow: #c0bebe
+    ),
+    dark:(
+        textColor: whitesmoke,
+        textColorSoft:lightgray,
+        bg: #222,
+        bgSoft: #333,
+        logo: white,
+        border: #444,
+        shadow: #3b3b3b
+    ),
+);
+
+//esta funcion pasara por cada elemento del div principal de App.js y lo cambiará
+//si ponemos theme-light sera blanco, si ponemos theme-dark cambiará al modo noche
+@mixin themify($themes){
+    @each $theme, $map in $themes{
+        .theme-#{$theme} & {
+            $theme-map: () !global;
+            @each $key, $submap in $map {
+                $value: map-get(map-get($themes, $theme), "#{$key}");
+                $theme-map: map-merge(
+                    $theme-map,
+                    (
+                        $key: $value,
+                    )
+                )   !global;
+            }
+            @content;
+            $theme-map: null !global;
+        }
+    }
+}
+
+@function themed($key) {
+    @return map-get($theme-map, $key);
+}
