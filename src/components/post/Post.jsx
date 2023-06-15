@@ -6,8 +6,12 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
 import { Link } from "react-router-dom";
+import Comments from "../comments/Comments"
+import {useState} from "react";
 
 const Post = ({post}) => {
+
+    const [commentOpen, setCommentOpen] = useState(false);
 
     //TEMPORARY
     const liked = false;
@@ -36,7 +40,7 @@ const Post = ({post}) => {
                         {liked ? <FavoriteIcon/> : <FavoriteBorderIcon/>}
                         12 likes
                     </div>
-                    <div className="item">
+                    <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                         <ChatBubbleOutlineIcon/>
                         2 comments
                     </div>
@@ -44,6 +48,7 @@ const Post = ({post}) => {
                         <IosShareIcon/>
                     </div>
                 </div>
+                {commentOpen && <Comments/>}
             </div>
         </div>
     )
