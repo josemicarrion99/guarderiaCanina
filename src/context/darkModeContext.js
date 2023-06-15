@@ -2,7 +2,7 @@ import {createContext, useEffect, useState} from "react";
 
 //con este fichero vamos a poder tener una variable llamada darkMode en toda la aplicacion
 
-//creamos un contexto API
+//creamos un contexto API que es lo que llamaremos al usar "userContext()" en nuestra app
 export const DarkModeContext = createContext();
 
 //creamos un provider para envolver nuestra aplicacion <DarkModeContextProvider>

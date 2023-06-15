@@ -2,16 +2,21 @@ import "./leftbar.scss"
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 
 const Leftbar = () => {
+
+    const { currentUser } = useContext(AuthContext);
+
     return (
         <div className="leftbar">
             <div className="container">
                 <div className="menu">
                     <div className="user">
-                        <img src="https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="" />
-                        <span>Jose</span>
+                        <img src={currentUser.profilePicture} alt="" />
+                        <span>{currentUser.name}</span>
                     </div>
                     <div className="item">
                         <PeopleAltIcon />

@@ -8,10 +8,12 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
 
 const Navbar = () => {
 
     const { toggle, darkMode } = useContext(DarkModeContext);
+    const { currentUser } = useContext(AuthContext);
 
     return (
         <div className="navbar">
@@ -34,8 +36,8 @@ const Navbar = () => {
             <div className="right">
                 <PersonIcon />
                 <div className="user">
-                    <img src="https://cdn.pixabay.com/photo/2023/05/20/19/58/woman-8007247_1280.jpg" alt="" />
-                    <span>Jose</span>
+                    <img src={currentUser.profilePicture} alt="" />
+                    <span>{currentUser.name}</span>
                 </div>
             </div>
         </div>
