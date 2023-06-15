@@ -11,7 +11,7 @@ export const Posts = () => {
       userId:1,
       profilePicture:"https://free-images.com/lg/ec9a/sea_dolphin_blue_in_0.jpg",
       img:"https://free-images.com/lg/c7fd/kiss_dolphin_water_sea_0.jpg",
-      description:"guaaaauu me encanta esta foooototootoototootototoototootototo",
+      description:"guaaaauu me encanta esta foooototootoototoot ototoototootototo",
     },
     {
       id:2, 
@@ -19,14 +19,14 @@ export const Posts = () => {
       userId:2,
       profilePicture:"https://free-images.com/lg/ec9a/sea_dolphin_blue_in_0.jpg",
       img:"https://free-images.com/lg/c7fd/kiss_dolphin_water_sea_0.jpg",
-      description:"adfafawegaghsdddddddddddddddddddddddddddd",
+      description:"adfafaw egaghsddd ddddddddddddd ddddddddddddddd ddddddd",
     },
     {
       id:3, 
       name:"Miriam3",
       userId:3,
       profilePicture:"https://free-images.com/lg/ec9a/sea_dolphin_blue_in_0.jpg",
-      description:"Ladaruefoiamwfevoipehavnaoivsnb auoseehy fouoasf opifaysdd yfassypuf ",
+      description:"Ladaruefoiamw fevoipehavnaoivsnb auoseehy fouoasf opifaysdd yfassypuf ",
     },
   ]
       

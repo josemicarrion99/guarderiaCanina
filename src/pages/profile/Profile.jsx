@@ -14,7 +14,7 @@ const Profile = () => {
         <div className="profile">
             <div className="images">
                 <img src="https://cdn.pixabay.com/photo/2016/11/14/04/45/elephant-1822636_1280.jpg" alt="" className="cover"/>
-                <img src="https://cdn.pixabay.com/photo/2017/06/20/22/14/man-2425121_1280.jpg" alt="" className="profilePicture" />
+                <img src="https://cdn.pixabay.com/photo/2017/06/20/22/14/man-2425121_1280.jpg" alt="" className="profilePic" />
             </div>
             <div className="profileContainer">
                 <div className="uInfo">

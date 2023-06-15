@@ -12,6 +12,7 @@
 
         .container{
             padding: 20px;
+            //width: 300px;//aaaa
             .user{
                 display: flex;
                 align-items: center;
@@ -48,6 +49,10 @@
                     max-height: 500px;
                     object-fit: cover;
                     margin-top: 20px;
+                }
+
+                p{
+                    //overflow:scroll;
                 }
             }
 

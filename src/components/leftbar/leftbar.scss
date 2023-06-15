@@ -11,6 +11,11 @@
         background-color: themed("bg");
         color: themed("textColor");
 
+        @include mobile{
+            display:none;
+        }
+
+
         //esto quita la barra a la derecha para scrollear
         &::-webkit-scrollbar{
             display: none;
@@ -59,7 +64,7 @@
 
                     // img {}
 
-                    span {}
+                    //span {}
                 }
             }
         }
