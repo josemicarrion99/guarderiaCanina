@@ -8,10 +8,17 @@ import postRoutes from "./routes/posts.js"
 import cookieParser from "cookie-parser"
 import cors from "cors"
 
+//alt+shift+f para formatear
 
 //middlewares
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", true);
+    next();
+})
 app.use(express.json())
-app.use(cors())
+app.use(cors({
+    origin: "http://localhost:3000",
+}))
 // app.use(cookieParser) //hace que no me funcione la bbdd
 
 
@@ -22,6 +29,6 @@ app.use("/api/likes", likeRoutes)
 app.use("/api/posts", postRoutes)
 
 
-app.listen(8800, () =>{
+app.listen(8800, () => {
     console.log("API working!!")
 });

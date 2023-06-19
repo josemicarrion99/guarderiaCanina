@@ -21,7 +21,7 @@ const Post = ({post}) => {
             <div className="container">
                 <div className="user">
                     <div className="userInfo">
-                        <img src={post.profilePicture} alt="" />
+                        <img src={post.profilePic} alt="" />
                         <div className="details">
                             <Link to={`/profile/${post.userId}`} style={{textDecoration:"none", color:"inherit"}}>
                            <div><span className="name">{post.name}</span></div>
@@ -32,7 +32,7 @@ const Post = ({post}) => {
                     <MoreHorizIcon/>                
                 </div>
                 <div className="content">
-                    <p>{post.description}</p>
+                    <p>{post.desc}</p>
                     <img src={post.img} alt="" />
                 </div>
                 <div className="info">
