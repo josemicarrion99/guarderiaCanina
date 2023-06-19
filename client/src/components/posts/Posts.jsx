@@ -15,11 +15,13 @@ export const Posts = () => {
 
   console.log(data);
 
-  return <div className="posts">
-    {data.map(post => (
-      <Post post={post} key={post.id} />
-    ))}
-  </div>;
+  return (<div className="posts">
+    {error ? "Algo ha ido mal" : (isLoading
+      ? "Cargando..."
+      : data.map((post) => 
+      <Post post={post} key={post.id} />))}
+  </div>
+  );
 };
 
 export default Posts

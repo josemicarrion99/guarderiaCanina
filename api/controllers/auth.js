@@ -48,6 +48,7 @@ export const login = (req, res) => {
 
         if (!checkPassword) return res.status(400).json("Password o username incorrectos");
 
+        //secretKey es el nombre de nuestro token
         const token = jwt.sign({ id: data[0].id }, "secretkey");
 
         const { password, ...others } = data[0];
