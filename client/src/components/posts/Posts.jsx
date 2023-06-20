@@ -6,7 +6,7 @@ import { makeRequest } from "../../axios";
 
 export const Posts = () => {
 
-
+  
   const { isLoading, error, data } = useQuery(['posts'], () =>
     makeRequest.get("/posts").then((res) => {
       return res.data;

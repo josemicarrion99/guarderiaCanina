@@ -15,11 +15,11 @@ import multer from "multer"
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Credentials", true);
     next();
-})
-app.use(express.json())
+});
+app.use(express.json());
 app.use(cors({
     origin: "http://localhost:3000",
-}))
+}));
 app.use(cookieParser()) //permite la lectura de la cookie de mi cliente
 
 const storage = multer.diskStorage({
@@ -41,7 +41,7 @@ app.post("/api/upload", upload.single("file"), (req, res) =>{
 
 app.use("/api/users", userRoutes)
 app.use("/api/auth", authRoutes)
-app.use("/api/comment", commentRoutes)
+app.use("/api/comments", commentRoutes)
 app.use("/api/likes", likeRoutes)
 app.use("/api/posts", postRoutes)
 
