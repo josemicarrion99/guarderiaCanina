@@ -36,11 +36,11 @@ function App() {
         <div className={`theme-${darkMode ? "dark" :"light"}`}>
           <Navbar/>
           <div style={{display:"flex"}}>
-            <Leftbar/>
+            {/* <Leftbar/> */}
             <div style={{flex:6}}>
               <Outlet/>
             </div>
-            <Rightbar/>
+            {/* <Rightbar/> */}
           </div>
         </div>
       </QueryClientProvider>

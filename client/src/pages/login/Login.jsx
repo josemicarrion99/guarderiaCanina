@@ -37,20 +37,20 @@ const Login = () => {
         <div className="login">
             <div className="card">
                 <div className="left">
-                    <h1>Hello world.</h1>
-                    <p>asdfafiowejfiojfweoijfewaoijfoiwaeefjoiafsj</p>
-                    <span>No tienes una cuenta?</span>
+                    <h1>Bienvenido a guardería canina!!</h1>
+                    {/* <p>asdfafiowejfiojfweoijfewaoijfoiwaeefjoiafsj</p> */}
+                    <span>¿No tienes una cuenta?</span>
                     <Link to="/register">
-                        <button>Register</button>
+                        <button>Registrarse</button>
                     </Link>
                 </div>
                 <div className="right">
-                    <h1>Login</h1>
+                    <h1>Inicio de sesión</h1>
                     <form>
                         <input type="text" placeholder="Username" name="username" onChange={handleChange} />
                         <input type="password" placeholder="Password" name="password" onChange={handleChange} />
                         {err && err} {/*si hay un error lo mostramos*/}
-                        <button onClick={handleLogin}>Login</button>
+                        <button onClick={handleLogin}>Iniciar sesión</button>
                     </form>
                 </div>
             </div>

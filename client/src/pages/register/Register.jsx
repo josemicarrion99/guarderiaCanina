@@ -10,6 +10,7 @@ const Register = () => {
         email: "",
         password: "",
         name: "",
+        type: "",
     });
 
     const [err, setErr] = useState(null);
@@ -19,8 +20,14 @@ const Register = () => {
         setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
+    // const handleSelect = (e) => {
+    //     console.log(e.target.name + " " + e.target.value);
+    //     this.setInputs(prev => ({...prev, [e.target.name]: e.target.value}));
+    // };
+
     const handleClick = async (e) => {
         e.preventDefault();
+        if(inputs.type == "" || inputs.type == "vacia") return setErr("Escoja un tipo");
 
         try{
             await axios.post("http://localhost:8800/api/auth/register", inputs);
@@ -29,28 +36,33 @@ const Register = () => {
         }
     };
 
-    console.log(err);
-
+    
     return (
         <div className="register">
             <div className="card">
                 <div className="left">
-                    <h1>Hello world.</h1>
-                    <p>asdfafiowejfiojfweoijfewaoijfoiwaeefjoiafsj</p>
-                    <span>Tienes una cuenta?</span>
+                    <h1>Bienvenido a guardería canina!</h1>
+                    {/* <p>asdfafiowejfiojfweoijfewaoijfoiwaeefjoiafsj</p> */}
+                    <span>¿Ya tienes una cuenta?</span>
                     <Link to="/login">
-                        <button>Login</button>
+                        <button>Iniciar sesión</button>
                     </Link>
                 </div>
                 <div className="right">
-                    <h1>Register</h1>
+                    <h1>Registrese a continuación:</h1>
                     <form action="">
                         <input type="text" placeholder="Username" name="username" onChange={handleChange} />
                         <input type="email" placeholder="Email" name="email" onChange={handleChange} />
                         <input type="password" placeholder="Password" name="password" onChange={handleChange} />
                         <input type="text" placeholder="Name" name="name" onChange={handleChange} />
+                        <select name="type" defaultValue="Vacia" onChange={handleChange}>
+                            <option value="vacia">Escoja una opción...</option>
+                            <option value="cliente">Cliente</option>
+                            <option value="cuidador">Cuidador</option>
+                        </select>                        
+                        {/* <button></button> */}
                         {err && err}
-                        <button onClick={handleClick}>Register</button>
+                        <button onClick={handleClick}>Registrarse</button>
                     </form>
                 </div>
             </div>

@@ -8,6 +8,7 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import Posts from "../../components/posts/Posts"
+import Update from "../../components/update/Update"
 
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
@@ -17,7 +18,6 @@ import { AuthContext } from "../../context/authContext";
 
 const Profile = () => {
     const [openUpdate, setOpenUpdate] = useState(false);
-
     const { currentUser } = useContext(AuthContext);
 
     //cogemos el tercer elemento de la url para saber la id el perfil de usuario
@@ -56,8 +56,6 @@ const Profile = () => {
 
     };
 
-
-
     return (
         <div className="profile">
             {isLoading ? (
@@ -65,8 +63,8 @@ const Profile = () => {
             ) : (
                 <>
                     <div className="images">
-                        <img src={data.coverPic} alt="" className="cover" />
-                        <img src={data.profilePic} alt="" className="profilePic" />
+                        <img src={"/upload/" + data.coverPic} alt="" className="cover" />
+                        <img src={"/upload/" +data.profilePic} alt="" className="profilePic" />
                     </div>
                     <div className="profileContainer">
                         <div className="uInfo">
@@ -93,23 +91,28 @@ const Profile = () => {
                                         <span>{data.website}</span>
                                     </div>
                                 </div>
-                                {relationshipIsLoading ? "loading"
+                                {/*  */}
+                                {relationshipIsLoading  
+                                    ? "loading"
                                     : userId === currentUser.id
-                                        ? (<button>Update</button>)
-                                        : (<button onClick={handleFollow}>{
-                                            relationshipData.includes(currentUser.id)
+                                        ? (<button onClick={() => setOpenUpdate(true)}>Update</button>)
+                                        : currentUser.type == 'Cliente' ? (<button onClick={handleFollow}>
+                                            {relationshipData.includes(currentUser.id)
                                                 ? "Following"
-                                                : "Follow"}</button>)}
+                                                : "Follow"}</button>) : ""
+                                
+                                }
                             </div>
                             <div className="right">
                                 <WhatsAppIcon />
                                 <MoreVertIcon />
                             </div>
                         </div>
-                        <Posts userId={userId}/>
+                        <Posts userId={userId} />
                     </div>
                 </>
             )}
+            {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
         </div>
     );
 }

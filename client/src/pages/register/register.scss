@@ -1,18 +1,31 @@
-.register{
+@import "../../style.scss";
+
+.register {
     height: 100vh;
     background-color: rgb(153, 95, 204);
     display: flex;
     align-items: center;
     justify-content: center;
-    .card{
+
+    .card {
+
+        @include mobile {
+            width: 90%;
+        }
+
+        @include tablet {
+            width: 90%;
+        }
+
         width: 50%;
         display: flex;
-        flex-direction: row-reverse; //con esto hago que la parte de la derecha salga a la izquierda y viicebersa
+        // flex-direction: column-reverse; //con esto hago que la parte de la derecha salga a la izquierda y viicebersa
         background-color: white;
         border-radius: 10px;
         min-height: 600px;
         overflow: hidden;
-        .left{
+
+        .left {
             //al ponerlo de esta forma si que me sale la imagen
             // background-image:
             // linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(117, 19, 93, 0.73)),
@@ -21,59 +34,69 @@
             // max-height: 100%;
             // background-size: cover;
             // color: white;
-            flex:1;
-            background: linear-gradient(rgb(219, 154, 219), rgb(239, 217, 239)), 
-            url("https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&w=1600") 
-            center;
+            flex: 1;
+            background: linear-gradient(rgb(219, 154, 219), rgb(239, 217, 239)),
+                url("https://images.pexels.com/photos/46024/pexels-photo-46024.jpeg?auto=compress&cs=tinysrgb&w=1600") center;
             background-size: cover;
-            padding: 50px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            gap: 30px;
-            color:white;
+            gap: 15px;
+            color: white;
 
-            h1{
-                font-size: 100px;
-                line-height: 100px;
+            h1 {
+                font-size: 25px;
+                // line-height: 75px;
             }
-            p{
+
+            p {
                 font-size: 14px;
             }
+
             //span{}
-            button{
+            button {
                 width: 50%;
                 padding: 10px;
                 border: none;
                 background-color: white;
-                color:rebeccapurple;
+                color: rebeccapurple;
                 font-weight: bold;
                 cursor: pointer;
             }
         }
-        .right{
-            flex:1;
-            padding: 50px;
+
+        .right {
+            flex: 1;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            gap:50px;
+            gap: 20px;
             justify-content: center;
-            h1{
-                color:#555;
+
+            h1 {
+                color: #555;
             }
-            form{
+
+            form {
                 display: flex;
                 flex-direction: column;
                 gap: 30px;
 
-                input{
-                    border:none;
+                input {
+                    border: none;
                     border-bottom: 1px solid lightgray;
-                    padding: 20px 10px;
+                    padding: 12px 10px;
+                    @include mobile {
+                        padding:none;
+                    }
+            
+
                 }
-                button{
+
+                button {
                     width: 50%;
-                    padding:10px;
-                    border:none;
+                    padding: 10px;
+                    border: none;
                     background-color: #938eef;
                     color: white;
                     font-weight: bold;

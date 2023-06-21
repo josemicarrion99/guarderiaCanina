@@ -15,6 +15,7 @@
         color: themed("textColor");
         z-index: 999;
 
+
         .left {
             display: flex;
             align-items: center;
@@ -69,9 +70,9 @@
                 gap: 10px;
                 font-weight: 500;
 
-                @include tablet{
-                    display:none;
-                }        
+                // @include tablet{
+                //     display:none;
+                // }        
 
                 img {
                     width: 30px;

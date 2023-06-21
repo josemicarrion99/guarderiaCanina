@@ -3,6 +3,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import GridViewIcon from '@mui/icons-material/GridView';
 import SearchIcon from '@mui/icons-material/Search';
+import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import { Link } from "react-router-dom";
@@ -21,20 +22,29 @@ const Navbar = () => {
                 <Link to="/" style={{ textDecoration: "none" }}>
                     <span>Guarderia canina</span>
                 </Link>
-                <HomeIcon />
+                <Link to={"/profile/" + currentUser.id} >
+                    <PersonIcon />
+                </Link>
                 {darkMode ? (
-                    <WbSunnyIcon onClick={toggle} style={{cursor: "pointer"}}/>
-                ) : ( 
-                    <DarkModeIcon onClick={toggle} style={{cursor: "pointer"}}/> 
+                    <WbSunnyIcon onClick={toggle} style={{ cursor: "pointer" }} />
+                ) : (
+                    <DarkModeIcon onClick={toggle} style={{ cursor: "pointer" }} />
                 )}
-                <GridViewIcon />
-                <div className="search">
+                {/* <GridViewIcon /> */}
+                {/* <div className="search">
                     <SearchIcon />
                     <input type="text" placeholder="Search" />
-                </div>
+                </div> */}
+                <Link to={"/login"} >
+                    <LogoutIcon />
+                </Link>
             </div>
-            <div className="right">
-                <PersonIcon />
+            <div className="right"> 
+
+                {/* <Link to={"/login"} >
+                    <PersonIcon />
+                </Link> */}
+
                 <div className="user">
                     <img src={currentUser.profilePic} alt="" />
                     <span>{currentUser.name}</span>
