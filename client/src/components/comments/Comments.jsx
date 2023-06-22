@@ -8,9 +8,12 @@ import { makeRequest } from "../../axios";
 
 const Comments = ({ postId }) => {
 
-    const [desc, setDesc] = useState("");
     
     const { currentUser } = useContext(AuthContext);
+
+    const [desc, setDesc] = useState("");
+    const [commenting, setCommenting] = useState(currentUser.type === "Cuidador" ? "none" : "")
+
 
         const { isLoading, error, data } = useQuery(["comment"], () =>
         makeRequest.get("/comments?postId=" + postId).then((res) => {
@@ -35,11 +38,11 @@ const Comments = ({ postId }) => {
     
     return (
         <div className="comments">
-            <div className="write">
-                <img src={currentUser.profilePic} alt="" />
-                <input type="text" placeholder="Write a comment" 
+            <div className="write" >
+                <img src={currentUser.profilePic} style={{display:commenting}} alt="" />
+                <input type="text" style={{display:commenting}} placeholder="Write a comment" 
                 value={desc} onChange={e=>setDesc(e.target.value)}/>
-                <button onClick={handleClick}>Send</button>
+                <button onClick={handleClick} style={{display:commenting}}>Send</button>
             </div>
             {isLoading
                 ? "loading"

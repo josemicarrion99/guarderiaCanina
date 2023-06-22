@@ -18,6 +18,8 @@ import { AuthContext } from "../../context/authContext";
 const Post = ({ post }) => {
 
     const [commentOpen, setCommentOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+
     const { currentUser } = useContext(AuthContext);
 
     const { isLoading, error, data } = useQuery(["likes", post.id], () =>
@@ -30,22 +32,41 @@ const Post = ({ post }) => {
     const queryClient = useQueryClient();
     const mutation = useMutation(
         (liked) => {
-          if (liked) return makeRequest.delete("/likes?postId=" + post.id);
-          console.log(post.id);
-          return makeRequest.post("/likes", { postId: post.id });
+            if (liked) return makeRequest.delete("/likes?postId=" + post.id);
+            return makeRequest.post("/likes", { postId: post.id });
         },
         {
-          onSuccess: () => {
-            // Invalidate and refetch
-            queryClient.invalidateQueries(["likes"]);
-          },
+            onSuccess: () => {
+                // Invalidate and refetch
+                queryClient.invalidateQueries(["likes"]);
+            },
         }
-      );
-    
+    );
+
+    const deleteMutation = useMutation(
+        (postId) => {
+            return makeRequest.delete("/posts/" + postId);
+        },
+        {
+            onSuccess: () => {
+                // Invalidate and refetch
+                queryClient.invalidateQueries(["posts"]);
+            },
+        }
+    );
+
     const handleLike = () => {
         mutation.mutate(data.includes(currentUser.id));
 
+
     };
+
+    const handleDelete = () => {
+        deleteMutation.mutate(post.id);
+
+    };
+
+
 
     return (
         <div className="post">
@@ -54,16 +75,17 @@ const Post = ({ post }) => {
                     <div className="userInfo">
                         <img src={"./upload" + post.profilePic} alt="" />
                         <div className="details">
-              <Link
-                to={`/profile/${post.userId}`}
-                style={{ textDecoration: "none", color: "inherit" }}
-              >
-                <span className="name">{post.name}</span>
-              </Link>
-              <span className="date">{moment(post.createdAt).fromNow()}</span>
-            </div>
+                            <Link
+                                to={`/profile/${post.userId}`}
+                                style={{ textDecoration: "none", color: "inherit" }}
+                            >
+                                <span className="name">{post.name}</span>
+                            </Link>
+                            <span className="date">{moment(post.createdAt).fromNow()}</span>
+                        </div>
                     </div>
-                    <MoreHorizIcon />
+                    {/* <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} /> */}
+                    {(post.userId === currentUser.id ) ? <button onClick={handleDelete}>Borrar</button>: ""}
                 </div>
                 <div className="content">
                     <p>{post.desc}</p>
@@ -81,11 +103,10 @@ const Post = ({ post }) => {
                         ) : (
                             <FavoriteBorderIcon onClick={handleLike} />
                         )}
-                        {data?.length} Likes
+                        {data?.length} likes
                     </div>
                     <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                         <ChatBubbleOutlineIcon />
-                        2 comments
                     </div>
                     <div className="item">
                         <IosShareIcon />

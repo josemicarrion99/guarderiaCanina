@@ -3,13 +3,10 @@ import jwt from "jsonwebtoken";
 
 export const getUser = (req, res) => {
 
-    console.log("users.js");
-
   const userId = req.params.userId;
   const q = "SELECT * FROM users WHERE id=?";
 
   db.query(q, [userId], (err, data) => {
-    console.log(userId)
     if (err) return res.status(500).json(err);
     const { password, ...info } = data[0];
     return res.json(info);
@@ -25,9 +22,6 @@ export const updateUser = (req, res) => {
 
     const q =
       "UPDATE users SET `name`=?,`city`=?,`website`=?,`profilePic`=?,`coverPic`=?, `type`=? WHERE id=? ";
-
-      console.log("backendddd");
-      console.log(req.body.type);
 
     db.query(
       q,

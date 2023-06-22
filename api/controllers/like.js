@@ -40,9 +40,6 @@ export const deleteLike = (req, res) => {
 
     const q = "DELETE FROM likes WHERE `userId` = ? AND `postId` = ?";
 
-    console.log(userInfo.id);
-    console.log(req.query.postId);
-
     db.query(q, [userInfo.id, req.query.postId], (err, data) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json("Le has dado a dislike.");

@@ -44,6 +44,10 @@
             gap: 30px;
             color: white;
 
+            align-items: center;
+            justify-content: center;
+        
+
             h1 {
                 font-size: 25px;
                 // line-height: 100px;
@@ -55,7 +59,7 @@
 
             //span{}
             button {
-                width: 50%;
+                width: 100%;
                 padding: 10px;
                 border: none;
                 background-color: white;

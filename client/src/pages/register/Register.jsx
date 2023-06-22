@@ -20,14 +20,9 @@ const Register = () => {
         setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    // const handleSelect = (e) => {
-    //     console.log(e.target.name + " " + e.target.value);
-    //     this.setInputs(prev => ({...prev, [e.target.name]: e.target.value}));
-    // };
-
     const handleClick = async (e) => {
         e.preventDefault();
-        if(inputs.type == "" || inputs.type == "vacia") return setErr("Escoja un tipo");
+        if(inputs.type === "" || inputs.type === "vacia") return setErr("Escoja un tipo");
 
         try{
             await axios.post("http://localhost:8800/api/auth/register", inputs);
@@ -55,12 +50,12 @@ const Register = () => {
                         <input type="email" placeholder="Email" name="email" onChange={handleChange} />
                         <input type="password" placeholder="Password" name="password" onChange={handleChange} />
                         <input type="text" placeholder="Name" name="name" onChange={handleChange} />
+                        <span>¿Desea cuidar o buscar cuidador?</span>
                         <select name="type" defaultValue="Vacia" onChange={handleChange}>
                             <option value="vacia">Escoja una opción...</option>
                             <option value="cliente">Cliente</option>
                             <option value="cuidador">Cuidador</option>
                         </select>                        
-                        {/* <button></button> */}
                         {err && err}
                         <button onClick={handleClick}>Registrarse</button>
                     </form>

@@ -39,6 +39,7 @@ const Share = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
+    if(desc == "" || desc == " ") return;
     let imgUrl = "";
     if(file) imgUrl = await upload();
     mutation.mutate({desc, img:imgUrl});
@@ -52,7 +53,7 @@ const Share = () => {
         <div className="top">
           <div className="left">
             <img src={currentUser.profilePic} alt="" />
-            <input type="text" placeholder={`What's on your mind ${currentUser.name}`} onChange={(e) => setDesc(e.target.value)} value={desc}/>
+            <input type="text" onChange={(e) => setDesc(e.target.value)} value={desc}/>
           </div>
           <div className="right">
             {/* si añadimos una foto creamos un link falso para ver la imagen de manera previa */}

@@ -44,6 +44,10 @@
             gap: 15px;
             color: white;
 
+                align-items: center;
+    justify-content: center;
+
+
             h1 {
                 font-size: 25px;
                 // line-height: 75px;
@@ -55,7 +59,7 @@
 
             //span{}
             button {
-                width: 50%;
+                width: 100%;
                 padding: 10px;
                 border: none;
                 background-color: white;
@@ -80,7 +84,7 @@
             form {
                 display: flex;
                 flex-direction: column;
-                gap: 30px;
+                gap: 20px;
 
                 input {
                     border: none;
@@ -89,7 +93,15 @@
                     @include mobile {
                         padding:none;
                     }
-            
+                }
+
+                span{
+                    padding-top:10px;
+                }
+                select{
+                    background-color: #ebddec;
+                    max-width:200px;
+                    box-sizing: border-box;
 
                 }
 
