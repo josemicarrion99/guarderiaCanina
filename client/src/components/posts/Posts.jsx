@@ -14,7 +14,6 @@ export const Posts = ({userId}) => {
     })
   );
 
-  console.log(data);
 
   return (<div className="posts">
     {error ? "Algo ha ido mal" : (isLoading

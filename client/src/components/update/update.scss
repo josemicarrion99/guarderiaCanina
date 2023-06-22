@@ -38,7 +38,7 @@
                 }
 
                 h1 {
-                    color: lightgrey;
+                    color: themed("textColor");
 
                     @include mobile {
                         font-size: 20px;

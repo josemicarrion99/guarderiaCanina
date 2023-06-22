@@ -23,6 +23,7 @@ export const updateUser = (req, res) => {
     const q =
       "UPDATE users SET `name`=?,`city`=?,`website`=?,`profilePic`=?,`coverPic`=?, `type`=? WHERE id=? ";
 
+      console.log(userInfo.id)
     db.query(
       q,
       [
@@ -31,8 +32,8 @@ export const updateUser = (req, res) => {
         req.body.website,
         req.body.profilePic,
         req.body.coverPic,
+        req.body.type,
         userInfo.id,
-        req.body.type
       ],
       (err, data) => {
         if (err) res.status(500).json(err);

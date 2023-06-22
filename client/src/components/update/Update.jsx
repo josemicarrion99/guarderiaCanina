@@ -5,8 +5,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 const Update = ({ setOpenUpdate, user }) => {
-    const [cover, setCover] = useState(null);
-    const [profile, setProfile] = useState(null);
+    const [cover, setCover] = useState("");
+    const [profile, setProfile] = useState("");
     const [texts, setTexts] = useState({
         email: user.email,
         password: user.password,
@@ -28,19 +28,22 @@ const Update = ({ setOpenUpdate, user }) => {
     };
 
     const handleChange = (e) => {
+        console.log(e)
+
         setTexts((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
     };
 
     const queryClient = useQueryClient();
 
-    const mutation = useMutation(
+    const mutationUpdateUser = useMutation(
         (user) => {
             return makeRequest.put("/users", user);
         },
         {
             onSuccess: () => {
                 // Invalidate and refetch
-                queryClient.invalidateQueries(["user"]);
+                queryClient.invalidateQueries(["users"]);
+                window.location.reload(false);
             },
         }
     );
@@ -48,14 +51,15 @@ const Update = ({ setOpenUpdate, user }) => {
     const handleClick = async (e) => {
         e.preventDefault();
 
-        //TODO: find a better way to get image URL
-
         let coverUrl;
         let profileUrl;
         coverUrl = cover ? await upload(cover) : user.coverPic;
         profileUrl = profile ? await upload(profile) : user.profilePic;
 
-        mutation.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
+        console.log(coverUrl);
+        console.log(profileUrl);
+
+        mutationUpdateUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
         setOpenUpdate(false);
         setCover(null);
         setProfile(null);
@@ -65,7 +69,7 @@ const Update = ({ setOpenUpdate, user }) => {
         <div className="update">
             <div className="container">
                 <div className="wrapper">
-                    <h1>Update Your Profile</h1>
+                    <h1>Actualiza tu perfil de usuario</h1>
                     <form>
                         <div className="files">
                             <label htmlFor="cover">
