@@ -9,6 +9,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import Posts from "../../components/posts/Posts"
 import Update from "../../components/update/Update"
+import Message from "../../components/message/Message"
 
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
@@ -18,6 +19,8 @@ import { AuthContext } from "../../context/authContext";
 
 const Profile = () => {
     const [openUpdate, setOpenUpdate] = useState(false);
+    const [openMessage, setOpenMessage] = useState(false);
+
     const { currentUser } = useContext(AuthContext);
 
     //cogemos el tercer elemento de la url para saber la id el perfil de usuario
@@ -51,8 +54,9 @@ const Profile = () => {
         }
     );
 
-    const handleFollow = () => {
-        mutation.mutate(relationshipData.includes(currentUser.id));
+    const handleMessage = () => {
+        // mutation.mutate(relationshipData.includes(currentUser.id));
+
 
     };
 
@@ -96,7 +100,7 @@ const Profile = () => {
                                     ? "loading"
                                     : userId === currentUser.id
                                         ? (<button onClick={() => setOpenUpdate(true)}>Update</button>)
-                                        : currentUser.type == 'Cliente' ? (<button onClick={handleFollow}>
+                                        : currentUser.type == 'Cliente' ? (<button onClick={() => setOpenMessage(true)}>
                                             {relationshipData.includes(currentUser.id)
                                                 ? "Following"
                                                 : "Follow"}</button>) : ""
@@ -113,6 +117,7 @@ const Profile = () => {
                 </>
             )}
             {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
+            {openMessage && <Message setOpenMessage = {setOpenMessage} cuidador={userId}/>}
         </div>
     );
 }

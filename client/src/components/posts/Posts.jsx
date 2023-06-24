@@ -4,10 +4,10 @@ import { useQuery } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
 
 
-export const Posts = ({userId}) => {
+const Posts = ({userId}) => {
 
   
-  const { isLoading, error, data } = useQuery(['posts'], () =>
+  const { isLoading, error, data } = useQuery(["posts"], () =>
     makeRequest.get("/posts?userId=" + userId).then((res) => {
       console.log(res.data)
       return res.data;
@@ -17,7 +17,9 @@ export const Posts = ({userId}) => {
 
 
   return (<div className="posts">
-    {error ? "Algo ha ido mal" : (isLoading
+    {error 
+    ? "Algo ha ido mal" 
+    : (isLoading
       ? "Cargando..."
       : data.map((post) => 
       <Post post={post} key={post.id} />))}

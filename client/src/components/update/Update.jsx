@@ -34,8 +34,6 @@ const Update = ({ setOpenUpdate, user }) => {
     };
 
     const handleChange = (e) => {
-        console.log(e)
-
         setTexts((prev) => ({ ...prev, [e.target.name]: [e.target.value] }));
     };
 
