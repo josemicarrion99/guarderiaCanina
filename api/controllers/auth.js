@@ -24,15 +24,6 @@ export const register = (req, res) => {
 
     })
 
-    // const {username, password} = req.body;
-    // const hash = await bcrypt.hash(password, 13);
-
-    // users.push({
-    //     username, 
-    //     password: hash
-    // })
-
-    // res.send('ok');
 
 }
 
@@ -49,7 +40,8 @@ export const login = (req, res) => {
         if (!checkPassword) return res.status(400).json("Password o username incorrectos");
 
         //secretKey es el nombre de nuestro token
-        const token = jwt.sign({ id: data[0].id }, "secretkey");
+        //aqui cambiamos lo que le pasamos por cookie a las otras paginas de la app
+        const token = jwt.sign({ id: data[0].id, type: data[0].type }, "secretkey", {expiresIn: '120m'});
 
         const { password, ...others } = data[0];
 

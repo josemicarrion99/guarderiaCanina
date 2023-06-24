@@ -43,3 +43,32 @@ export const updateUser = (req, res) => {
     );
   });
 };
+
+
+export const deleteUser = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not authenticated!");
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid!");
+
+    const q =
+      "DELETE FROM users WHERE id = ? ";
+
+      console.log(q);
+
+      console.log(userInfo.id)
+    db.query(q, [userInfo.id,],
+      (err, data) => {
+        if (err) res.status(500).json(err);
+          res.clearCookie("accessToken", {
+            secure: true,
+            sameSite: "none"
+        }).status(200).json("User has been logged out");
+        return res.json("Updated!")
+    
+      }
+    );
+  });
+};
+

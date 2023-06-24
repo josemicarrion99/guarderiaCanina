@@ -3,10 +3,16 @@ import { makeRequest } from "../../axios";
 import "./update.scss";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { confirmAlert } from 'react-confirm-alert';
+import { Link, useNavigate } from "react-router-dom";
+
 
 const Update = ({ setOpenUpdate, user }) => {
     const [cover, setCover] = useState("");
     const [profile, setProfile] = useState("");
+
+    const navigate = useNavigate();
+
     const [texts, setTexts] = useState({
         email: user.email,
         password: user.password,
@@ -48,6 +54,18 @@ const Update = ({ setOpenUpdate, user }) => {
         }
     );
 
+    const mutationDeleteUser = useMutation(
+        (user) => {
+            return makeRequest.delete("/users", user);
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries(["users"]);
+                navigate("/register");
+            }
+        }
+    );
+
     const handleClick = async (e) => {
         e.preventDefault();
 
@@ -65,6 +83,29 @@ const Update = ({ setOpenUpdate, user }) => {
         setProfile(null);
     }
 
+    // const handleDelete = async (e) => {
+
+    //     mutationDeleteUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
+    // }
+
+    const handleDelete = async (e) => {
+        e.preventDefault();
+
+        let coverUrl;
+        let profileUrl;
+        coverUrl = cover ? await upload(cover) : user.coverPic;
+        profileUrl = profile ? await upload(profile) : user.profilePic;
+
+        console.log(coverUrl);
+        console.log(profileUrl);
+
+        mutationDeleteUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
+        setOpenUpdate(false);
+        setCover(null);
+        setProfile(null);
+    }
+
+
     return (
         <div className="update">
             <div className="container">
@@ -75,14 +116,6 @@ const Update = ({ setOpenUpdate, user }) => {
                             <label htmlFor="cover">
                                 <span>Cover Picture</span>
                                 <div className="imgContainer">
-                                    <img
-                                        src={
-                                            cover
-                                                ? URL.createObjectURL(cover)
-                                                : user.coverPic
-                                        }
-                                        alt=""
-                                    />
                                     <CloudUploadIcon className="icon" />
                                 </div>
                             </label>
@@ -95,14 +128,6 @@ const Update = ({ setOpenUpdate, user }) => {
                             <label htmlFor="profile">
                                 <span>Profile Picture</span>
                                 <div className="imgContainer">
-                                    <img
-                                        src={
-                                            profile
-                                                ? URL.createObjectURL(profile)
-                                                : user.profilePic
-                                        }
-                                        alt=""
-                                    />
                                     <CloudUploadIcon className="icon" />
                                 </div>
                             </label>
@@ -148,10 +173,11 @@ const Update = ({ setOpenUpdate, user }) => {
                             value={texts.website}
                             onChange={handleChange}
                         />
-                        <button onClick={handleClick}>Update</button>
+                        <button onClick={handleClick}>Actualizar</button>
+                        <button onClick={handleDelete}>Eliminar</button>                    
                     </form>
                     <button className="close" onClick={() => setOpenUpdate(false)}>
-                        close
+                        Cerrar
                     </button>
                 </div>
             </div>
