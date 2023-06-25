@@ -22,7 +22,7 @@ const Navbar = () => {
                 <Link to="/" style={{ textDecoration: "none" }}>
                     <span>Guarderia canina</span>
                 </Link>
-                <Link to={"/profile/" + currentUser.id} >
+                <Link to={"/profile/" + currentUser.id}  >
                     <PersonIcon />
                 </Link>
                 {darkMode ? (

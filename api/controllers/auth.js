@@ -41,7 +41,7 @@ export const login = (req, res) => {
 
         //secretKey es el nombre de nuestro token
         //aqui cambiamos lo que le pasamos por cookie a las otras paginas de la app
-        const token = jwt.sign({ id: data[0].id, type: data[0].type }, "secretkey", {expiresIn: '120m'});
+        const token = jwt.sign({ id: data[0].id, type: data[0].type, city: data[0].city }, "secretkey", {expiresIn: '120m'});
 
         const { password, ...others } = data[0];
 

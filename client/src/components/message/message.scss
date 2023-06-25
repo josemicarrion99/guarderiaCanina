@@ -1,6 +1,6 @@
 @import "../../style.scss";
 
-.share {
+.message {
   @include themify($themes) {
 
     position: fixed;
@@ -15,6 +15,7 @@
     z-index: 999;
 
     overflow: scroll;
+
     
 
 
@@ -31,6 +32,7 @@
       box-shadow: 10px 10px 5px 0px rgba(238,242,230,0.59);
       background-color: themed("bg");
       color: themed("textColor");
+  
   
       .top {
         display: flex;
@@ -86,10 +88,12 @@
       }
 
       .bottom {
+    
         display: flex;
         align-items: center;
         justify-content: space-between;
-        .left {
+        .left { 
+          
           display: flex;
           align-items: center;
           gap: 20px;
@@ -99,6 +103,8 @@
             align-items: center;
             gap: 10px;
             cursor: pointer;
+
+            color: grey;
 
             img {
               height: 20px;
@@ -123,7 +129,7 @@
         .close {
           position: absolute;
           top: 30px;
-          right: 50px;
+          right: 30px;
           border: none;
           background-color: #f0544f;
           padding: 5px;

@@ -2,28 +2,12 @@ import { db } from "../connect.js";
 import jwt from "jsonwebtoken";
 import moment from "moment";
 
-// function isAuthenticated() {
-//     const token = localStorage.getItem('token');
-//     const refreshToken = localStorage.getItem('refreshToken');
-//     try {
-//       decode(token);
-//       const { exp } = decode(refreshToken);
-//       if (exp < (new Date().getTime() + 1) / 1000) {
-//         return false;
-//       }
-//     } catch (err) {
-//       return false;
-//     }
-//     return true;
-//   }
-
+//cliente => Home donde mostramos todos los de su ciudad
+//Cuidador => Home sus propios posts teniendo uno pineado arriba (igual que si alguien se mete en su perfil)
 export const getPosts = (req, res) => {
 
     const userId = req.query.userId;
     const token = req.cookies.accessToken;
-
-    let verificado = false;
-
 
     if (!token) return res.status(401).json("Not logged in!");
 
@@ -32,22 +16,23 @@ export const getPosts = (req, res) => {
     jwt.verify(token, "secretkey", (err, userInfo) => {
         if (err) return res.status(403).json("Token is not valid!");
 
-        verificado = true;
-        // const q =
-        //     (userId !== "undefined"
-        //         ? `SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId) WHERE p.userId = ?`
-        //         : `SELECT DISTINCT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId)
-        // LEFT JOIN relationships AS r ON (p.userId = r.followedUserId) WHERE r.followerUserId = ? OR p.userId = ?
-        // ORDER BY p.createdAt DESC`);
-
+        // 1 => cuidadores home lo que han subido con el pineado arriba
+        // 2 => clientes home que salgan posts de su ciudad
+        // 3 => clientes profile de cuidador sale lo que han subido con el pineado arriba 
         const q =
-            (userInfo.type !== "Cuidador"
-                ? `SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId) ` //recibir los posts para los clientes, todos -- La SEGUNDA es 
-                : `SELECT DISTINCT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId) 
-                    ORDER BY p.createdAt DESC`);
+            userInfo.type === "Cuidador"
+            ? "SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId) WHERE p.userId = ?"
+            : (userId === "undefined"
+                ? `SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId AND u.city = ?)`  
+                : `SELECT DISTINCT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId)  WHERE p.userId = ? ORDER BY p.createdAt DESC`);
 
         const values =
-            userId !== "undefined" ? [userId] : [userInfo.id, userInfo.id]
+            userInfo.type === "Cuidador"
+            ? [userInfo.id]
+            : (userId === "undefined" 
+                ? [userInfo.city] 
+                : [userId]);
+
 
         db.query(q, values, (err, data) => {
             if (err) return res.status(500).json(err);
@@ -55,7 +40,6 @@ export const getPosts = (req, res) => {
         });
     });
 
-    if(!verificado) return "Token caducado";
 
 };
 

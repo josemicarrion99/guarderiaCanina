@@ -14,18 +14,48 @@ import Message from "../../components/message/Message"
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
 import { useLocation } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/authContext";
 
 const Profile = () => {
-    const [openUpdate, setOpenUpdate] = useState(false);
-    const [openMessage, setOpenMessage] = useState(false);
 
+    const [openUpdate, setOpenUpdate] = useState(false);
+    const [openMessage, setOpenMessage] = useState({state: false, alreadyMessaged: false});
+
+    // const [reload, setReload] = useState([true]);
+
+    
     const { currentUser } = useContext(AuthContext);
 
     //cogemos el tercer elemento de la url para saber la id el perfil de usuario
     //http://localhost:3000/profile/7
     const userId = parseInt(useLocation().pathname.split("/")[2]);
+
+    // console.log("AHORA ES " + reload + userId);
+
+
+    // useEffect(() => {
+    //     console.log("HE ENTRADO")
+    //     if(userId == currentUser.id && reload){
+    //         console.log("antes de cambio" + reload);
+    //         window.location.reload(true);
+    //         setReload(false);
+
+    //         console.log("despues de cambio" + reload);
+
+    //     }
+    // }, []);
+
+
+    // const previousUserId = 0;
+
+    // const checkingChange = () => {
+    //     console.log("checkingChange");
+    //     if(userId != previousUserId){
+    //         previousUserId = userId;
+    //         window.location.reload(false);
+    //     }
+    // }
 
     const { isLoading, error, data } = useQuery(["user"], () =>
         makeRequest.get("/users/find/" + userId).then((res) => {
@@ -40,25 +70,35 @@ const Profile = () => {
         })
     );
 
-    const queryClient = useQueryClient();
-    const mutation = useMutation(
-        (following) => {
-            if (following) return makeRequest.delete("/relationships?userId=" + userId);
-            return makeRequest.post("/relationships", { userId });
-        },
-        {
-            onSuccess: () => {
-                // Invalidate and refetch
-                queryClient.invalidateQueries(["relationship"]);
-            },
-        }
-    );
+    // const queryClient = useQueryClient();
+    // const mutation = useMutation(
+    //     (following) => {
+    //         if (following) return makeRequest.delete("/relationships?userId=" + userId);
+    //         return makeRequest.post("/relationships", { userId });
+    //     },
+    //     {
+    //         onSuccess: () => {
+    //             // Invalidate and refetch
+    //             queryClient.invalidateQueries(["relationship"]);
+    //         },
+    //     }
+    // );
 
-    const handleMessage = () => {
-        // mutation.mutate(relationshipData.includes(currentUser.id));
+    // const handleMessage = () => {
+    //     // mutation.mutate(relationshipData.includes(currentUser.id));
 
 
-    };
+    // };
+
+
+
+    const contactadoRecientemente = () => {
+        setOpenMessage({state: true, alreadyMessaged: true});
+    }
+
+    const contactar = () => {
+        setOpenMessage({state: true, alreadyMessaged: false});
+    }
 
     return (
         <div className="profile">
@@ -95,16 +135,26 @@ const Profile = () => {
                                         <span>{data.website}</span>
                                     </div>
                                 </div>
-                                {/*  */}
-                                {relationshipIsLoading  
+                                {/* {relationshipIsLoading  
                                     ? "loading"
                                     : userId === currentUser.id
                                         ? (<button onClick={() => setOpenUpdate(true)}>Update</button>)
-                                        : currentUser.type == 'Cliente' ? (<button onClick={() => setOpenMessage(true)}>
+                                        : currentUser.type == 'Cliente' 
+                                            ? (<button onClick={() => setOpenMessage(true)}>
                                             {relationshipData.includes(currentUser.id)
-                                                ? "Following"
-                                                : "Follow"}</button>) : ""
-                                
+                                                ? "Contactado recientemente"
+                                                : "Contactar"}</button>) 
+                                            : "" 
+                                } */}
+                                {relationshipIsLoading
+                                    ? "loading"
+                                    : userId === currentUser.id
+                                        ? (<button onClick={() => setOpenUpdate(true)}>Update</button>)
+                                        : currentUser.type == 'Cliente' 
+                                            ? (<button onClick={relationshipData.includes(currentUser.id)
+                                                ? contactadoRecientemente
+                                                : contactar}>Contactar</button>) 
+                                            : "" 
                                 }
                             </div>
                             <div className="right">
@@ -112,12 +162,13 @@ const Profile = () => {
                                 <MoreVertIcon />
                             </div>
                         </div>
-                        <Posts userId={userId} />
+                        {/* Si es tu propio perfil no muestra posts porque hay que mostrar mensajes */}
+                        <Posts userId={currentUser.id === userId ? null : userId} />
                     </div>
                 </>
             )}
             {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
-            {openMessage && <Message setOpenMessage = {setOpenMessage} cuidador={userId}/>}
+            {openMessage.state && <Message setOpenMessage = {setOpenMessage} cuidador={userId} alreadyMessaged={openMessage.alreadyMessaged}/>}
         </div>
     );
 }

@@ -7,11 +7,14 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 
 
-const Message = ({ setOpenMessage }) => {
+const Message = ({ setOpenMessage, cuidador, alreadyMessaged }) => {
 
   //objeto imagen y descripcion para crear el post
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
+
+  const [err, setErr] = useState(null);
+
 
   //funcion para subir imagenes
   const upload = async() =>{
@@ -21,7 +24,7 @@ const Message = ({ setOpenMessage }) => {
       const res = await makeRequest.post("/upload", formData);
       return res.data;
     }catch(err){
-      console.log(err);
+      setErr(err.response.data)
     };
   };
 
@@ -29,12 +32,15 @@ const Message = ({ setOpenMessage }) => {
 
   //usamos react query para hacer un post y fetchear de nuevo los posts
   const queryClient = useQueryClient();
-  const mutation = useMutation((newPost) => {
-    return makeRequest.post("/posts", newPost);
+  const mutation = useMutation((newMessage) => {
+    return makeRequest.post("/relationships", newMessage);
   }, {
     onSuccess: () => {
-      queryClient.invalidateQueries(["posts"]);
+      queryClient.invalidateQueries(["relationships"]);
     },
+    onError: (err) => {
+      setErr(err.response.data);
+    }
   });
 
   const handleClick = async (e) => {
@@ -42,15 +48,18 @@ const Message = ({ setOpenMessage }) => {
     if(desc == "" || desc == " ") return;
     let imgUrl = "";
     if(file) imgUrl = await upload();
-    mutation.mutate({desc, img:imgUrl});
-    setDesc("");
-    setFile(null);
-    setOpenMessage(false);
+      mutation.mutate({message: desc, img:imgUrl, followedUserId: cuidador, estado: 'Pendiente'});
+      if(err != null){
+        setDesc("");
+        setFile(null);
+        setOpenMessage({state: false, alreadyMessaged: false})
+      }  
   };
 
   return (
-    <div className="share">
+    <div className="message">
       <div className="container">
+        <h3 style={{color:"red", fontSize:"14px", textAlign:"center"}}>{err && err}</h3>
         <div className="top">
           <div className="left">
             <img src={currentUser.profilePic} alt="" />
@@ -84,7 +93,7 @@ const Message = ({ setOpenMessage }) => {
           <div className="right">
             <button onClick={handleClick}>Share</button>
           </div>
-          <button className="close" onClick={() => setOpenMessage(false)}>&nbsp; X &nbsp; </button>
+          <button className="close" onClick={() => setOpenMessage({state: false, alreadyMessaged: false})}>&nbsp; X &nbsp; </button>
         </div>
       </div>
     </div>
