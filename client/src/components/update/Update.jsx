@@ -63,7 +63,7 @@ const Update = ({ setOpenUpdate, user }) => {
         }
     );
 
-    const handleClick = async (e) => {
+    const handleUpdate = async (e) => {
         e.preventDefault();
 
         let coverUrl;
@@ -164,7 +164,7 @@ const Update = ({ setOpenUpdate, user }) => {
                             value={texts.website}
                             onChange={handleChange}
                         />
-                        <button className="button-29-purple" onClick={handleClick}>Actualizar</button>
+                        <button className="button-29-purple" onClick={handleUpdate}>Actualizar</button>
                         <button className="button-29-red" onClick={handleDelete}>Eliminar</button>                    
                     </form>
                     <button className="close" onClick={() => setOpenUpdate(false)}>&nbsp; X &nbsp; </button>

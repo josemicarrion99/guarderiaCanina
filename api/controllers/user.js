@@ -9,7 +9,7 @@ export const getUser = (req, res) => {
   db.query(q, [userId], (err, data) => {
     if (err) return res.status(500).json(err);
     const { password, ...info } = data[0];
-    return res.json(info);
+    return res.status(200).json(info);
   });
 };
 
@@ -21,7 +21,7 @@ export const updateUser = (req, res) => {
     if (err) return res.status(403).json("Token is not valid!");
 
     const q =
-      "UPDATE users SET `name`=?,`city`=?,`website`=?,`profilePic`=?,`coverPic`=?, `type`=? WHERE id=? ";
+      "UPDATE users SET `name`=?,`city`=?,`website`=?,`profilePic`=?,`coverPic`=? WHERE id=? ";
 
     db.query(
       q,
@@ -31,7 +31,6 @@ export const updateUser = (req, res) => {
         req.body.website,
         req.body.profilePic,
         req.body.coverPic,
-        req.body.type,
         userInfo.id,
       ],
       (err, data) => {
@@ -57,11 +56,11 @@ export const deleteUser = (req, res) => {
     db.query(q, [userInfo.id,],
       (err, data) => {
         if (err) res.status(500).json(err);
-          res.clearCookie("accessToken", {
+        res.clearCookie("accessToken", {
             secure: true,
             sameSite: "none"
-        }).status(200).json("User has been logged out");
-        return res.json("Updated!")
+        })
+        return res.status(200).json("El usuario ha sido eliminado");
     
       }
     );

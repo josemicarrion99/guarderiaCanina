@@ -7,13 +7,11 @@ export const getRelationships = (req, res) => {
 
   if (!token) return res.status(401).json("Not logged in!");
 
-
   jwt.verify(token, "secretkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid!");
 
 
-    const q = "SELECT r.*, name, profilePic FROM relationships AS r JOIN users as u ON (u.id = r.followedUserId) WHERE followedUserId = ?";
-
+    const q = "SELECT r.*, name, profilePic FROM relationships AS r JOIN users as u ON (u.id = r.followerUserId) WHERE followedUserId = ? AND r.estado != 'Rechazado'";
 
     db.query(q, [userInfo.id], (err, data) => {
       if (err) return res.status(500).json(err);
@@ -32,15 +30,10 @@ export const addRelationships = (req, res) => {
     if (err) return res.status(403).json("Token is not valid!");
 
     //comprobamos si se ha mandado un mensaje en los ultimos dos dias
-    const checkingQuery = "SELECT count(*) as messagesSent FROM relationships WHERE followerUserId = ? AND followedUserId = ? AND date(createdAt) > CURDATE() - INTERVAL 2 DAY";
+    const checkingQuery = "SELECT count(*) as messagesSent FROM relationships WHERE followerUserId = ? AND followedUserId = ? AND (date(createdAt) > (CURDATE() - INTERVAL 2 DAY));";
 
-    var messagesSent = 0;
-
-    db.query(checkingQuery, [userInfo.id, req.body.followedUserId], (err, result) => {
-      messagesSent = result[0].messagesSent;
-    });
-
-    console.log(messagesSent)
+    var estado;
+    userInfo.type == "Cuidador" ? estado = 'Aceptado' : estado = 'Pendiente';
 
     const q = "INSERT INTO relationships (`followerUserId`,`followedUserId`, `createdAt`,`message`,`estado`, `img`) VALUES (?)";
     const values = [
@@ -48,18 +41,20 @@ export const addRelationships = (req, res) => {
       req.body.followedUserId,
       moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
       req.body.message,
-      req.body.estado,
+      estado,
       req.body.img
     ];
 
-    if (messagesSent == 0) {
-      db.query(q, [values], (err, data) => {
-        if (err) return res.status(500).json(err);
-        return res.status(200).json("Error.");
-      });
-    } else {
-      return res.status(500).json("Has contactado con este cuidador hace menos de dos días.");
-    }
+    db.query(checkingQuery, [userInfo.id, req.body.followedUserId], (err, result) => {
+      if(result[0].messagesSent == 0) {
+        db.query(q, [values], (err, data) => {
+          if (err) return res.status(500).json(err);
+          return res.status(200).json("Mensaje enviado!!");
+        });
+      }else{
+        return res.status(500).json("Has contactado con este cuidador hace menos de dos días.");
+      }
+    });
   });
 };
 
@@ -78,5 +73,30 @@ export const deleteRelationships = (req, res) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json("Unfollow.");
     });
+  });
+};
+
+export const updateRelationship = (req, res) => {
+  const token = req.cookies.accessToken;
+  if (!token) return res.status(401).json("Not authenticated!");
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid!");
+
+    const q =
+      "UPDATE relationships SET `estado`=? WHERE id=? ";
+
+    db.query(
+      q,
+      [
+        req.body.estado,
+        req.body.id
+      ],
+      (err, data) => {
+        if (err) res.status(500).json(err);
+        if (data.affectedRows > 0) return res.json("Updated!");
+        return res.status(403).json("You can update only your post!");
+      }
+    );
   });
 };

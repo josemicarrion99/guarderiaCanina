@@ -1,6 +1,5 @@
 import "./sendMessage.scss";
 import ImageIcon from '@mui/icons-material/Image';
-import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -13,7 +12,7 @@ const Message = ({ setOpenMessage, userToMessage }) => {
   const [file, setFile] = useState(null);
   const [desc, setDesc] = useState("");
 
-  const [err, setErr] = useState(null);
+  const [err, setErr] = useState("");
 
 
   //funcion para subir imagenes
@@ -23,8 +22,8 @@ const Message = ({ setOpenMessage, userToMessage }) => {
       formData.append("file", file);
       const res = await makeRequest.post("/upload", formData);
       return res.data;
-    }catch(err){
-      setErr(err.response.data)
+    }catch(error){
+      // setErr(error.response.data)
     };
   };
 
@@ -35,11 +34,15 @@ const Message = ({ setOpenMessage, userToMessage }) => {
   const mutation = useMutation((newMessage) => {
     return makeRequest.post("/relationships", newMessage);
   }, {
-    onSuccess: () => {
+    onSuccess: () => {//si no ha habido ningun error cerramos la ventan
       queryClient.invalidateQueries(["relationships"]);
+      setDesc("");
+      setFile(null);
+      setOpenMessage(false)
+
     },
-    onError: (err) => {
-      setErr(err.response.data);
+    onError: (error) => {
+      setErr(error.response.data);      
     }
   });
 
@@ -49,10 +52,7 @@ const Message = ({ setOpenMessage, userToMessage }) => {
     let imgUrl = "";
     if(file) imgUrl = await upload();
       mutation.mutate({message: desc, img:imgUrl, followedUserId: userToMessage, estado: 'Pendiente'});
-      if(err != null){
-        setDesc("");
-        setFile(null);
-        setOpenMessage({state: false, alreadyMessaged: false})
+      if(err == ""){ 
       }  
   };
 

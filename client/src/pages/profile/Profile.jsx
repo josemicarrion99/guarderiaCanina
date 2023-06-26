@@ -22,7 +22,7 @@ const Profile = () => {
 
     const [openUpdate, setOpenUpdate] = useState(false);
     const [openMessage, setOpenMessage] = useState(false);
-    
+
     const { currentUser } = useContext(AuthContext);
 
     //cogemos el tercer elemento de la url para saber la id el perfil de usuario
@@ -32,7 +32,7 @@ const Profile = () => {
     const { isLoading, error, data } = useQuery(["user"], () =>
         makeRequest.get("/users/find/" + userId).then((res) => {
             return res.data;
-        })
+        },)
     );
 
     // const { isLoading: relationshipIsLoading, data: relationshipData } = useQuery(
@@ -44,7 +44,7 @@ const Profile = () => {
 
     const contactadoRecientemente = () => {
         setOpenMessage(true);
-    } 
+    }
 
     const contactar = () => {
         setOpenMessage(true);
@@ -58,7 +58,7 @@ const Profile = () => {
                 <>
                     <div className="images">
                         <img src={"/upload/" + data.coverPic} alt="" className="cover" />
-                        <img src={"/upload/" +data.profilePic} alt="" className="profilePic" />
+                        <img src={"/upload/" + data.profilePic} alt="" className="profilePic" />
                     </div>
                     <div className="profileContainer">
                         <div className="uInfo">
@@ -108,7 +108,7 @@ const Profile = () => {
                                 } */}
                                 {userId === currentUser.id
                                     ? (<button onClick={() => setOpenUpdate(true)} className="button-29-purple" >Update</button>)
-                                    : (<button onClick={contactar} className="button-29-purple" >Contactar</button>) 
+                                    : (<button onClick={contactar} className="button-29-purple" >Contactar</button>)
                                 }
 
                             </div>
@@ -118,12 +118,12 @@ const Profile = () => {
                             </div>
                         </div>
                         {/* Si es tu propio perfil no muestra posts porque hay que mostrar mensajes */}
-                        {currentUser.id === userId ? <Messages/> : <Posts userId={userId} />} 
+                        {currentUser.id === userId ? <Messages/> : <Posts userId={userId} />}
                     </div>
                 </>
             )}
             {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
-            {openMessage && <MessageSender setOpenMessage = {setOpenMessage} cuidador={userId}/>}
+            {openMessage && <MessageSender setOpenMessage={setOpenMessage} userToMessage={userId} />}
         </div>
     );
 }

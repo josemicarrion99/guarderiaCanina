@@ -3,31 +3,43 @@ import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import moment from "moment";
 
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
 import { AuthContext } from "../../context/authContext";
 
 import MessageSender from "../../components/sendMessage/SendMessage"
 
-
-
 const Message = ({ message }) => {
 
     const [openMessage, setOpenMessage] = useState(false);
+    const {currentUser} = useContext(AuthContext);
 
 
-const handleAceptar = () => {
-    setOpenMessage(true);
-}
+    const queryClient = useQueryClient();
+    const mutation = useMutation((newMessage) => {
+      return makeRequest.put("/relationships", newMessage);
+    }, {
+      onSuccess: () => {//si no ha habido ningun error cerramos la ventan
+        queryClient.invalidateQueries(["relationships"]);  
+      },
+      onError: (error) => {
+        console.log(error.response.data);      
+      }
+    });
 
-const handleRechazar = () => {
-    
-}
+    const handleAceptar = () => {
+        setOpenMessage(true);
+    }
+
+    const handleRechazar = () => {
+        mutation.mutate({id: message.id, estado: 'Rechazado'});
+    }
 
 
 
     return (
-        <div className="message">
+
+        (<div className="message">
             <div className="container">
                 <div className="user">
                     <div className="userInfo">
@@ -47,18 +59,21 @@ const handleRechazar = () => {
                     <p>{message.message}</p>
                     <img src={"./upload/" + message.img} alt="" />
                 </div>
-                <div className="container">
+
+                {(currentUser.type == "Cuidador" && message.estado == "Pendiente")
+                ? (<div className="container">
                     <div className="answer">
-                        <button className="button-29-green" onClick={handleAceptar} style={{width:"80px"}} >Aceptar</button>
+                        <button className="button-29-green" onClick={handleAceptar} style={{ width: "80px" }} >Aceptar</button>
                     </div>
                     <div className="answer">
-                        <button className="button-29-red" onClick={handleRechazar} style={{width:"85px"}}>Rechazar</button>
+                        <button className="button-29-red" onClick={handleRechazar} style={{ width: "85px" }}>Rechazar</button>
                     </div>
-                </div>
+                </div>) 
+                : ""}
             </div>
-            {openMessage && <MessageSender setOpenMessage = {setOpenMessage} userToMessage={message.userId}/>}
-        </div>
+            {openMessage && <MessageSender setOpenMessage={setOpenMessage} userToMessage={message.followerUserId} />}
+        </div>)
     )
 }
 
-export default Message
+export default Message;
