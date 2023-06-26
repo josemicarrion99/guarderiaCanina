@@ -23,7 +23,6 @@ export const updateUser = (req, res) => {
     const q =
       "UPDATE users SET `name`=?,`city`=?,`website`=?,`profilePic`=?,`coverPic`=?, `type`=? WHERE id=? ";
 
-      console.log(userInfo.id)
     db.query(
       q,
       [
@@ -55,9 +54,6 @@ export const deleteUser = (req, res) => {
     const q =
       "DELETE FROM users WHERE id = ? ";
 
-      console.log(q);
-
-      console.log(userInfo.id)
     db.query(q, [userInfo.id,],
       (err, data) => {
         if (err) res.status(500).json(err);

@@ -22,7 +22,6 @@ const Update = ({ setOpenUpdate, user }) => {
     });
 
     const upload = async (file) => {
-        console.log(file)
         try {
             const formData = new FormData();
             formData.append("file", file);
@@ -72,9 +71,6 @@ const Update = ({ setOpenUpdate, user }) => {
         coverUrl = cover ? await upload(cover) : user.coverPic;
         profileUrl = profile ? await upload(profile) : user.profilePic;
 
-        console.log(coverUrl);
-        console.log(profileUrl);
-
         mutationUpdateUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
         setOpenUpdate(false);
         setCover(null);
@@ -93,9 +89,6 @@ const Update = ({ setOpenUpdate, user }) => {
         let profileUrl;
         coverUrl = cover ? await upload(cover) : user.coverPic;
         profileUrl = profile ? await upload(profile) : user.profilePic;
-
-        console.log(coverUrl);
-        console.log(profileUrl);
 
         mutationDeleteUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
         setOpenUpdate(false);

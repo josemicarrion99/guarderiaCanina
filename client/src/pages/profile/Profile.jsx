@@ -8,22 +8,20 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import Posts from "../../components/posts/Posts"
+import Messages from "../../components/messages/Messages"
 import Update from "../../components/update/Update"
-import Message from "../../components/message/Message"
+import MessageSender from "../../components/sendMessage/SendMessage"
 
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
 import { useLocation } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 
 const Profile = () => {
 
     const [openUpdate, setOpenUpdate] = useState(false);
-    const [openMessage, setOpenMessage] = useState({state: false, alreadyMessaged: false});
-
-    // const [reload, setReload] = useState([true]);
-
+    const [openMessage, setOpenMessage] = useState(false);
     
     const { currentUser } = useContext(AuthContext);
 
@@ -31,73 +29,25 @@ const Profile = () => {
     //http://localhost:3000/profile/7
     const userId = parseInt(useLocation().pathname.split("/")[2]);
 
-    // console.log("AHORA ES " + reload + userId);
-
-
-    // useEffect(() => {
-    //     console.log("HE ENTRADO")
-    //     if(userId == currentUser.id && reload){
-    //         console.log("antes de cambio" + reload);
-    //         window.location.reload(true);
-    //         setReload(false);
-
-    //         console.log("despues de cambio" + reload);
-
-    //     }
-    // }, []);
-
-
-    // const previousUserId = 0;
-
-    // const checkingChange = () => {
-    //     console.log("checkingChange");
-    //     if(userId != previousUserId){
-    //         previousUserId = userId;
-    //         window.location.reload(false);
-    //     }
-    // }
-
     const { isLoading, error, data } = useQuery(["user"], () =>
         makeRequest.get("/users/find/" + userId).then((res) => {
             return res.data;
         })
     );
 
-    const { isLoading: relationshipIsLoading, data: relationshipData } = useQuery(
-        ["relationship"], () =>
-        makeRequest.get("/relationships?followedUserId=" + userId).then((res) => {
-            return res.data;
-        })
-    );
-
-    // const queryClient = useQueryClient();
-    // const mutation = useMutation(
-    //     (following) => {
-    //         if (following) return makeRequest.delete("/relationships?userId=" + userId);
-    //         return makeRequest.post("/relationships", { userId });
-    //     },
-    //     {
-    //         onSuccess: () => {
-    //             // Invalidate and refetch
-    //             queryClient.invalidateQueries(["relationship"]);
-    //         },
-    //     }
+    // const { isLoading: relationshipIsLoading, data: relationshipData } = useQuery(
+    //     ["relationship"], () =>
+    //     makeRequest.get("/relationships?followedUserId=" + userId).then((res) => {
+    //         return res.data;
+    //     })
     // );
 
-    // const handleMessage = () => {
-    //     // mutation.mutate(relationshipData.includes(currentUser.id));
-
-
-    // };
-
-
-
     const contactadoRecientemente = () => {
-        setOpenMessage({state: true, alreadyMessaged: true});
-    }
+        setOpenMessage(true);
+    } 
 
     const contactar = () => {
-        setOpenMessage({state: true, alreadyMessaged: false});
+        setOpenMessage(true);
     }
 
     return (
@@ -146,7 +96,7 @@ const Profile = () => {
                                                 : "Contactar"}</button>) 
                                             : "" 
                                 } */}
-                                {relationshipIsLoading
+                                {/* {relationshipIsLoading
                                     ? "loading"
                                     : userId === currentUser.id
                                         ? (<button onClick={() => setOpenUpdate(true)}>Update</button>)
@@ -155,7 +105,12 @@ const Profile = () => {
                                                 ? contactadoRecientemente
                                                 : contactar}>Contactar</button>) 
                                             : "" 
+                                } */}
+                                {userId === currentUser.id
+                                    ? (<button onClick={() => setOpenUpdate(true)}>Update</button>)
+                                    : (<button onClick={contactar}>Contactar</button>) 
                                 }
+
                             </div>
                             <div className="right">
                                 <WhatsAppIcon />
@@ -163,12 +118,12 @@ const Profile = () => {
                             </div>
                         </div>
                         {/* Si es tu propio perfil no muestra posts porque hay que mostrar mensajes */}
-                        <Posts userId={currentUser.id === userId ? null : userId} />
+                        {currentUser.id === userId ? <Messages/> : <Posts userId={userId} />} 
                     </div>
                 </>
             )}
             {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
-            {openMessage.state && <Message setOpenMessage = {setOpenMessage} cuidador={userId} alreadyMessaged={openMessage.alreadyMessaged}/>}
+            {openMessage && <MessageSender setOpenMessage = {setOpenMessage} cuidador={userId}/>}
         </div>
     );
 }

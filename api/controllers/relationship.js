@@ -3,11 +3,22 @@ import jwt from "jsonwebtoken";
 import moment from "moment";
 
 export const getRelationships = (req, res) => {
-  const q = "SELECT followerUserId FROM relationships WHERE followedUserId = ?";
+  const token = req.cookies.accessToken;
 
-  db.query(q, [req.query.followedUserId], (err, data) => {
-    if (err) return res.status(500).json(err);
-    return res.status(200).json(data.map(relationship => relationship.followerUserId));
+  if (!token) return res.status(401).json("Not logged in!");
+
+
+  jwt.verify(token, "secretkey", (err, userInfo) => {
+    if (err) return res.status(403).json("Token is not valid!");
+
+
+    const q = "SELECT r.*, name, profilePic FROM relationships AS r JOIN users as u ON (u.id = r.followedUserId) WHERE followedUserId = ?";
+
+
+    db.query(q, [userInfo.id], (err, data) => {
+      if (err) return res.status(500).json(err);
+      return res.status(200).json(data);
+    });
   });
 }
 
@@ -24,11 +35,12 @@ export const addRelationships = (req, res) => {
     const checkingQuery = "SELECT count(*) as messagesSent FROM relationships WHERE followerUserId = ? AND followedUserId = ? AND date(createdAt) > CURDATE() - INTERVAL 2 DAY";
 
     var messagesSent = 0;
-    
+
     db.query(checkingQuery, [userInfo.id, req.body.followedUserId], (err, result) => {
       messagesSent = result[0].messagesSent;
     });
 
+    console.log(messagesSent)
 
     const q = "INSERT INTO relationships (`followerUserId`,`followedUserId`, `createdAt`,`message`,`estado`, `img`) VALUES (?)";
     const values = [
@@ -40,12 +52,14 @@ export const addRelationships = (req, res) => {
       req.body.img
     ];
 
-    db.query(q, [values], (err, data) => {
-      if(messagesSent != 0) return res.status(500).json("Has enviado el mensaje hace menos de dos dias.");
-
-      if (err) return res.status(500).json(err);
-      return res.status(200).json("Error.");
-    });
+    if (messagesSent == 0) {
+      db.query(q, [values], (err, data) => {
+        if (err) return res.status(500).json(err);
+        return res.status(200).json("Error.");
+      });
+    } else {
+      return res.status(500).json("Has contactado con este cuidador hace menos de dos días.");
+    }
   });
 };
 

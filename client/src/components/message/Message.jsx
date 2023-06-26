@@ -1,103 +1,60 @@
-import "./message.scss";
-import ImageIcon from '@mui/icons-material/Image';
-import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
-import { useContext, useState } from "react";
-import { AuthContext } from "../../context/authContext";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import "./message.scss"
+import { Link } from "react-router-dom";
+import { useState, useContext } from "react";
+import moment from "moment";
+
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
+import { AuthContext } from "../../context/authContext";
+
+import MessageSender from "../../components/sendMessage/SendMessage"
 
 
-const Message = ({ setOpenMessage, cuidador, alreadyMessaged }) => {
 
-  //objeto imagen y descripcion para crear el post
-  const [file, setFile] = useState(null);
-  const [desc, setDesc] = useState("");
+const Message = ({ message }) => {
 
-  const [err, setErr] = useState(null);
+    const [openMessage, setOpenMessage] = useState(false);
 
 
-  //funcion para subir imagenes
-  const upload = async() =>{
-    try{
-      const formData = new FormData();
-      formData.append("file", file);
-      const res = await makeRequest.post("/upload", formData);
-      return res.data;
-    }catch(err){
-      setErr(err.response.data)
-    };
-  };
+const handleAceptar = () => {
+    setOpenMessage(true);
+}
 
-  const { currentUser } = useContext(AuthContext);
+const handleRechazar = () => {
+    
+}
 
-  //usamos react query para hacer un post y fetchear de nuevo los posts
-  const queryClient = useQueryClient();
-  const mutation = useMutation((newMessage) => {
-    return makeRequest.post("/relationships", newMessage);
-  }, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(["relationships"]);
-    },
-    onError: (err) => {
-      setErr(err.response.data);
-    }
-  });
 
-  const handleClick = async (e) => {
-    e.preventDefault();
-    if(desc == "" || desc == " ") return;
-    let imgUrl = "";
-    if(file) imgUrl = await upload();
-      mutation.mutate({message: desc, img:imgUrl, followedUserId: cuidador, estado: 'Pendiente'});
-      if(err != null){
-        setDesc("");
-        setFile(null);
-        setOpenMessage({state: false, alreadyMessaged: false})
-      }  
-  };
 
-  return (
-    <div className="message">
-      <div className="container">
-        <h3 style={{color:"red", fontSize:"14px", textAlign:"center"}}>{err && err}</h3>
-        <div className="top">
-          <div className="left">
-            <img src={currentUser.profilePic} alt="" />
-            {/* <input type="text" onChange={(e) => setDesc(e.target.value)} value={desc}/> */}
-            <textarea onChange={(e) => setDesc(e.target.value)} value={desc}/>
-          </div>
-          <div className="right">
-            {/* si añadimos una foto creamos un link falso para ver la imagen de manera previa */}
-            {file && <img className="file" alt="" src={URL.createObjectURL(file)}/>}
-          </div>
-        </div>
-        <hr />
-        <div className="bottom">
-          <div className="left">
-            <input type="file" id="file" style={{display:"none"}} onChange={(e) => setFile(e.target.files[0])}/>
-            <label htmlFor="file">
-              <div className="item">
-                <ImageIcon/>
-                <span>Add Image</span>
-              </div>
-            </label>
-            <div className="item">
-              <AddLocationAltIcon/>
-              <span>Add Place</span>
+    return (
+        <div className="message">
+            <div className="container">
+                <div className="user">
+                    <div className="userInfo">
+                        <img src={"./upload" + message.profilePic} alt="" />
+                        <div className="details">
+                            <Link
+                                to={`/profile/${message.userId}`}
+                                style={{ textDecoration: "none", color: "inherit" }}
+                            >
+                                <span className="name">{message.name}</span>
+                            </Link>
+                            <span className="date">{moment(message.createdAt).fromNow()}</span>
+                        </div>
+                    </div>
+                </div>
+                <div className="content">
+                    <p>{message.message}</p>
+                    <img src={"./upload/" + message.img} alt="" />
+                </div>
+                <div className="answer">
+                    <button className="aceptar" onClick={handleAceptar}>Aceptar</button>
+                    <button className="rechazar" onClick={handleRechazar}>Rechazar</button>
+                </div>
             </div>
-            {/* <div className="item">
-              <img src={Friend} alt="" />
-              <span>Tag Friends</span>
-            </div> */}
-          </div>
-          <div className="right">
-            <button onClick={handleClick}>Share</button>
-          </div>
-          <button className="close" onClick={() => setOpenMessage({state: false, alreadyMessaged: false})}>&nbsp; X &nbsp; </button>
+            {openMessage && <MessageSender setOpenMessage = {setOpenMessage} userToMessage={message.userId}/>}
         </div>
-      </div>
-    </div>
-  );
-};
+    )
+}
 
-export default Message;
+export default Message

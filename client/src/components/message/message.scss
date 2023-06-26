@@ -1,143 +1,61 @@
 @import "../../style.scss";
 
-.message {
-  @include themify($themes) {
+.message{
+    @include themify($themes){
 
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 999;
+        -webkit-box-shadow: 10px 10px 5px 0px rgba(230,218,230,1);
+        -moz-box-shadow: 10px 10px 5px 0px rgba(230,218,230,1);
+        box-shadow: 10px 10px 5px 0px themed("shadow");
+        border-radius: 20px;
+        background-color: themed("bg");
+        color: themed("textColor");
 
-    overflow: scroll;
+        .container{
+            padding: 20px;
+            //width: 300px;//aaaa
+            .user{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .userInfo{
+                    display: flex;
+                    gap: 20px;
+                    
+                    img{
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
 
-    
+                    .details{
+                        display: flex;
+                        flex-direction: column;
 
+                        .name{
+                            font-weight: 500;
+                        }
 
-    .container {
-      
-      padding: 20px;
-      margin: 20px;
-      border-radius: 6%;
-      color: white;
-      background-color: rgb(249, 224, 251);
+                        .date{
+                            font-size: 12px;
+                        }
+                    }
+                }
+            }
+            .content{
+                margin:20px 0px;
+                img{
+                    width:100%;
+                    max-height: 500px;
+                    object-fit: cover;
+                    margin-top: 20px;
+                }
 
-      -webkit-box-shadow: 10px 10px 5px 0px rgba(238,242,230,0.59);
-      -moz-box-shadow: 10px 10px 5px 0px rgba(238,242,230,0.59);
-      box-shadow: 10px 10px 5px 0px rgba(238,242,230,0.59);
-      background-color: themed("bg");
-      color: themed("textColor");
-  
-  
-      .top {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-
-        .left {
-          display: flex;
-          align-items: center;
-          flex: 3;
-          img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-          }
-
-          // input {
-          //   border: none;
-          //   outline: none;
-          //   padding: 20px 10px;
-          //   background-color: transparent;
-          //   width: 60%;
-          //   color: themed("textColor");
-          // }
-          textarea{
-            background-color: transparent;
-            width: 100%;
-            color: themed("textColor");
-            margin-left: 40px;
-            padding: 10px;
-
-          }
-        }
-        .right {
-          flex: 1;
-          display: flex;
-          justify-content: flex-end;
-          .file {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 0px;
-          }
-        }
-      }
-
-      hr {
-        margin: 20px 0px;
-        border: none;
-        height: 0.5px;
-        background-color: themed("border");
-      }
-
-      .bottom {
-    
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        .left { 
-          
-          display: flex;
-          align-items: center;
-          gap: 20px;
-
-          .item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-
-            color: grey;
-
-            img {
-              height: 20px;
+                // p{
+                    //overflow:scroll;
+                // }
             }
 
-            span {
-              font-size: 12px;
-              color: gray;
-            }
-          }
         }
-        .right {
-          button {
-            border: none;
-            padding: 5px;
-            color: white;
-            cursor: pointer;
-            background-color: #5271ff;
-            border-radius: 3px;
-          }
-        }
-        .close {
-          position: absolute;
-          top: 30px;
-          right: 30px;
-          border: none;
-          background-color: #f0544f;
-          padding: 5px;
-          cursor: pointer;
-          color: white;
-      }
-
-      }
     }
-  }
 }

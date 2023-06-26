@@ -47,7 +47,7 @@ const Comments = ({ postId }) => {
             {isLoading
                 ? "loading"
                 : data.map((comment) => (
-                    <div className="comment">
+                    <div className="comment" key={comment.id}>
                         <img src={comment.profilePic} alt="" />
                         <div className="info">
                             <span>{comment.name}</span>
