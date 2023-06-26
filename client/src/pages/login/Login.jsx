@@ -50,7 +50,7 @@ const Login = () => {
                         <input type="text" placeholder="Username" name="username" onChange={handleChange} />
                         <input type="password" placeholder="Password" name="password" onChange={handleChange} />
                         {err && err} {/*si hay un error lo mostramos*/}
-                        <button onClick={handleLogin}>Iniciar sesión</button>
+                        <button className="button-29-purple" onClick={handleLogin}>Iniciar sesión</button>
                     </form>
                 </div>
             </div>

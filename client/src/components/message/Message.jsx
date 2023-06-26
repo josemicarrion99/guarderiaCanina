@@ -47,9 +47,13 @@ const handleRechazar = () => {
                     <p>{message.message}</p>
                     <img src={"./upload/" + message.img} alt="" />
                 </div>
-                <div className="answer">
-                    <button className="aceptar" onClick={handleAceptar}>Aceptar</button>
-                    <button className="rechazar" onClick={handleRechazar}>Rechazar</button>
+                <div className="container">
+                    <div className="answer">
+                        <button className="button-29-green" onClick={handleAceptar} style={{width:"80px"}} >Aceptar</button>
+                    </div>
+                    <div className="answer">
+                        <button className="button-29-red" onClick={handleRechazar} style={{width:"85px"}}>Rechazar</button>
+                    </div>
                 </div>
             </div>
             {openMessage && <MessageSender setOpenMessage = {setOpenMessage} userToMessage={message.userId}/>}

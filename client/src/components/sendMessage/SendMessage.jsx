@@ -81,17 +81,17 @@ const Message = ({ setOpenMessage, userToMessage }) => {
                 <span>Add Image</span>
               </div>
             </label>
-            <div className="item">
+            {/* <div className="item">
               <AddLocationAltIcon/>
               <span>Add Place</span>
-            </div>
+            </div> */}
             {/* <div className="item">
               <img src={Friend} alt="" />
               <span>Tag Friends</span>
             </div> */}
           </div>
           <div className="right">
-            <button onClick={handleClick}>Share</button>
+            <button className="button-29-purple" onClick={handleClick}>Compartir</button>
           </div>
           <button className="close" onClick={() => setOpenMessage(false)}>&nbsp; X &nbsp; </button>
         </div>

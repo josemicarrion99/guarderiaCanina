@@ -60,7 +60,7 @@ const Register = () => {
                             <option value="cuidador">Cuidador</option>
                         </select>                        
                         {err && err}
-                        <button onClick={handleClick}>Registrarse</button>
+                        <button className="button-29-purple" onClick={handleClick}>Registrarse</button>
                     </form>
                 </div>
             </div>

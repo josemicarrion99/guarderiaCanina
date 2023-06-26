@@ -107,14 +107,14 @@ const Profile = () => {
                                             : "" 
                                 } */}
                                 {userId === currentUser.id
-                                    ? (<button onClick={() => setOpenUpdate(true)}>Update</button>)
-                                    : (<button onClick={contactar}>Contactar</button>) 
+                                    ? (<button onClick={() => setOpenUpdate(true)} className="button-29-purple" >Update</button>)
+                                    : (<button onClick={contactar} className="button-29-purple" >Contactar</button>) 
                                 }
 
                             </div>
                             <div className="right">
                                 <WhatsAppIcon />
-                                <MoreVertIcon />
+                                {/* <MoreVertIcon /> */}
                             </div>
                         </div>
                         {/* Si es tu propio perfil no muestra posts porque hay que mostrar mensajes */}

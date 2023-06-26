@@ -42,7 +42,7 @@ const Comments = ({ postId }) => {
                 <img src={currentUser.profilePic} style={{display:commenting}} alt="" />
                 <input type="text" style={{display:commenting}} placeholder="Write a comment" 
                 value={desc} onChange={e=>setDesc(e.target.value)}/>
-                <button onClick={handleClick} style={{display:commenting}}>Send</button>
+                <button className="button-29-purple" onClick={handleClick} style={{display:commenting}}>Send</button>
             </div>
             {isLoading
                 ? "loading"

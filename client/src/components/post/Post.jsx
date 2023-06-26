@@ -18,7 +18,6 @@ import { AuthContext } from "../../context/authContext";
 const Post = ({ post }) => {
 
     const [commentOpen, setCommentOpen] = useState(false);
-    const [menuOpen, setMenuOpen] = useState(false);
 
     const { currentUser } = useContext(AuthContext);
 
@@ -84,8 +83,7 @@ const Post = ({ post }) => {
                             <span className="date">{moment(post.createdAt).fromNow()}</span>
                         </div>
                     </div>
-                    {/* <MoreHorizIcon onClick={() => setMenuOpen(!menuOpen)} /> */}
-                    {(post.userId === currentUser.id ) ? <button onClick={handleDelete}>Borrar</button>: ""}
+                    {(post.userId === currentUser.id ) ? <button className="button-29-red" onClick={handleDelete}>Borrar</button>: ""}
                 </div>
                 <div className="content">
                     <p>{post.desc}</p>

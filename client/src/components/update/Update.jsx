@@ -164,8 +164,8 @@ const Update = ({ setOpenUpdate, user }) => {
                             value={texts.website}
                             onChange={handleChange}
                         />
-                        <button onClick={handleClick}>Actualizar</button>
-                        <button onClick={handleDelete}>Eliminar</button>                    
+                        <button className="button-29-purple" onClick={handleClick}>Actualizar</button>
+                        <button className="button-29-red" onClick={handleDelete}>Eliminar</button>                    
                     </form>
                     <button className="close" onClick={() => setOpenUpdate(false)}>&nbsp; X &nbsp; </button>
                 </div>

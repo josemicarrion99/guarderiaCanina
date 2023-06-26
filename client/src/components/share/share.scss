@@ -2,8 +2,8 @@
 
 .share {
   @include themify($themes) {
-    -webkit-box-shadow: 10px 10px 5px 0px rgba(230,218,230,1);
-    -moz-box-shadow: 10px 10px 5px 0px rgba(230,218,230,1);
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(230, 218, 230, 1);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(230, 218, 230, 1);
     box-shadow: 10px 10px 5px 0px themed("shadow");
     border-radius: 20px;
     background-color: themed("bg");
@@ -12,6 +12,7 @@
 
     .container {
       padding: 20px;
+
       .top {
         display: flex;
         align-items: center;
@@ -21,6 +22,7 @@
           display: flex;
           align-items: center;
           flex: 3;
+
           img {
             width: 40px;
             height: 40px;
@@ -37,10 +39,12 @@
             color: themed("textColor");
           }
         }
+
         .right {
           flex: 1;
           display: flex;
           justify-content: flex-end;
+
           .file {
             width: 100px;
             height: 100px;
@@ -61,6 +65,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+
         .left {
           display: flex;
           align-items: center;
@@ -82,15 +87,17 @@
             }
           }
         }
+
         .right {
-          button {
-            border: none;
-            padding: 5px;
-            color: white;
-            cursor: pointer;
-            background-color: #5271ff;
-            border-radius: 3px;
-          }
+          // button {
+          //   border: none;
+          //   padding: 5px;
+          //   color: white;
+          //   cursor: pointer;
+          //   background-color: #5271ff;
+          //   border-radius: 3px;
+          // }
+
         }
       }
     }
