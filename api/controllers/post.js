@@ -19,11 +19,12 @@ export const getPosts = (req, res) => {
         // 3 => clientes profile de cuidador sale lo que han subido con el pineado arriba 
         const q =
             userInfo.type === "Cuidador"
-            ? "SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId) WHERE p.userId = ?"
+            ? "SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId) WHERE p.userId = ? ORDER BY p.createdAt DESC"
             : (userId === "undefined"
-                ? `SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId AND u.city = ?)`  
+                ? `SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId AND u.city = ?) ORDER BY p.createdAt DESC`  
                 : `SELECT DISTINCT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId)  WHERE p.userId = ? ORDER BY p.createdAt DESC`);
 
+                
         const values =
             userInfo.type === "Cuidador"
             ? [userInfo.id]

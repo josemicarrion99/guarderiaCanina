@@ -5,12 +5,12 @@ import TwitterIcon from '@mui/icons-material/Twitter';
 import MapIcon from '@mui/icons-material/Map';
 import LanguageIcon from '@mui/icons-material/Language';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 import Posts from "../../components/posts/Posts"
 import Messages from "../../components/messages/Messages"
 import Update from "../../components/update/Update"
 import MessageSender from "../../components/sendMessage/SendMessage"
+import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
 
 import { useQuery } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
@@ -22,6 +22,7 @@ const Profile = () => {
 
     const [openUpdate, setOpenUpdate] = useState(false);
     const [openMessage, setOpenMessage] = useState(false);
+    const [openVetHelp, setOpenVetHelp] = useState(false);
 
     const { currentUser } = useContext(AuthContext);
 
@@ -31,6 +32,7 @@ const Profile = () => {
 
     const { isLoading, error, data } = useQuery(["user"], () =>
         makeRequest.get("/users/find/" + userId).then((res) => {
+            if(error) console.log(error);
             return res.data;
         },)
     );
@@ -42,12 +44,12 @@ const Profile = () => {
     //     })
     // );
 
-    const contactadoRecientemente = () => {
+    const contactar = () => {
         setOpenMessage(true);
     }
 
-    const contactar = () => {
-        setOpenMessage(true);
+    const showVetContact = () => {
+        setOpenVetHelp(true);
     }
 
     return (
@@ -72,6 +74,9 @@ const Profile = () => {
                                 <a href="http://twitter.com">
                                     <TwitterIcon />
                                 </a>
+                                {(currentUser.id === userId && data.type === "Cuidador") 
+                                ? (<MedicalServicesIcon style={{cursor:"pointer", color:"red"}} onClick={showVetContact}/>)
+                                : ""}
                             </div>
                             <div className="center">
                                 <span>{data.name}</span>
@@ -114,16 +119,26 @@ const Profile = () => {
                             </div>
                             <div className="right">
                                 <WhatsAppIcon />
+                                <span>{data.phone}</span>
                                 {/* <MoreVertIcon /> */}
                             </div>
                         </div>
                         {/* Si es tu propio perfil no muestra posts porque hay que mostrar mensajes */}
-                        {currentUser.id === userId ? <Messages/> : <Posts userId={userId} />}
+                        {data.id === userId ? <Messages/> : <Posts userId={userId} />}
                     </div>
                 </>
             )}
             {openUpdate && <Update setOpenUpdate={setOpenUpdate} user={data} />}
             {openMessage && <MessageSender setOpenMessage={setOpenMessage} userToMessage={userId} />}
+            {openVetHelp && (
+                <div className="vetHelp">
+                    <div className="container">
+                        <span>El veterinari@ Marina Pérez está disponible</span>
+                        <h5>601 98 76 45</h5>
+                    </div>
+                    <button className="close" onClick={() => setOpenVetHelp(false)}>&nbsp; X &nbsp; </button>
+                </div>
+            )}
         </div>
     );
 }

@@ -52,7 +52,7 @@ const Share = () => {
       <div className="container">
         <div className="top">
           <div className="left">
-            <img src={currentUser.profilePic} alt="" />
+            <img src={"/upload/" + currentUser.profilePic} alt="" />
             <input type="text" onChange={(e) => setDesc(e.target.value)} value={desc}/>
           </div>
           <div className="right">

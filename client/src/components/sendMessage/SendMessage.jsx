@@ -62,7 +62,7 @@ const Message = ({ setOpenMessage, userToMessage }) => {
         <h3 style={{color:"red", fontSize:"14px", textAlign:"center"}}>{err && err}</h3>
         <div className="top">
           <div className="left">
-            <img src={currentUser.profilePic} alt="" />
+            <img src={"/upload/" + currentUser.profilePic} alt="" />
             {/* <input type="text" onChange={(e) => setDesc(e.target.value)} value={desc}/> */}
             <textarea onChange={(e) => setDesc(e.target.value)} value={desc}/>
           </div>
@@ -91,7 +91,7 @@ const Message = ({ setOpenMessage, userToMessage }) => {
             </div> */}
           </div>
           <div className="right">
-            <button className="button-29-purple" onClick={handleClick}>Compartir</button>
+            <button className="button-29-purple" onClick={handleClick}>Enviar</button>
           </div>
           <button className="close" onClick={() => setOpenMessage(false)}>&nbsp; X &nbsp; </button>
         </div>

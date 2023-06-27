@@ -4,13 +4,15 @@ import "./update.scss";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { confirmAlert } from 'react-confirm-alert';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const Update = ({ setOpenUpdate, user }) => {
     const [cover, setCover] = useState("");
     const [profile, setProfile] = useState("");
 
+
+    console.log(cover)
     const navigate = useNavigate();
 
     const [texts, setTexts] = useState({
@@ -19,6 +21,7 @@ const Update = ({ setOpenUpdate, user }) => {
         name: user.name,
         city: user.city,
         website: user.website,
+        phone: user.phone
     });
 
     const upload = async (file) => {
@@ -70,6 +73,9 @@ const Update = ({ setOpenUpdate, user }) => {
         let profileUrl;
         coverUrl = cover ? await upload(cover) : user.coverPic;
         profileUrl = profile ? await upload(profile) : user.profilePic;
+
+        console.log(coverUrl);
+        console.log(cover)
 
         mutationUpdateUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
         setOpenUpdate(false);
@@ -162,6 +168,13 @@ const Update = ({ setOpenUpdate, user }) => {
                             type="text"
                             name="website"
                             value={texts.website}
+                            onChange={handleChange}
+                        />
+                        <label>Phone number</label>
+                        <input
+                            type="text"
+                            name="phone"
+                            value={texts.phone}
                             onChange={handleChange}
                         />
                         <button className="button-29-purple" onClick={handleUpdate}>Actualizar</button>

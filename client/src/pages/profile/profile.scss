@@ -1,22 +1,22 @@
 @import "../../style.scss";
 
-.profile{
-    @include themify($themes){
+.profile {
+    @include themify($themes) {
         background-color: themed("bgSoft");
 
-        .images{
-            width:100%;
+        .images {
+            width: 100%;
             height: 300px;
             position: relative;
 
-            .cover{
-                width:100%;
-                height:100%;
+            .cover {
+                width: 100%;
+                height: 100%;
                 object-fit: cover;
 
             }
 
-            .profilePic{
+            .profilePic {
                 width: 125px;
                 height: 125px;
                 border-radius: 50%;
@@ -29,88 +29,90 @@
 
             }
         }
-        
-        .profileContainer{
+
+        .profileContainer {
             padding: 20px 70px;
 
-            @include mobile{
+            @include mobile {
                 padding: 10px;
             }
 
-            @include tablet{
+            @include tablet {
                 padding: 20px;
             }
-    
 
-            .uInfo{
-                height:180px;
-                -webkit-box-shadow: 10px 10px 5px 0px rgba(230,218,230,1);
-                -moz-box-shadow: 10px 10px 5px 0px rgba(230,218,230,1);
+
+            .uInfo {
+                height: 180px;
+                -webkit-box-shadow: 10px 10px 5px 0px rgba(230, 218, 230, 1);
+                -moz-box-shadow: 10px 10px 5px 0px rgba(230, 218, 230, 1);
                 box-shadow: 10px 10px 5px 0px themed("shadow");
                 border-radius: 20px;
                 background-color: themed("bg");
                 color: themed("textColor");
-                padding:50px;
+                padding: 50px;
 
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
 
                 margin-bottom: 20px;
-                @include mobile{
+
+                @include mobile {
                     flex-direction: column;
                     height: 30vh;
-                    padding:20px;
+                    padding: 20px;
                     margin-top: 100px;
                 }
-            
 
-                .left{
-                    flex:1;
-                    display:flex;
+
+                .left {
+                    flex: 1;
+                    display: flex;
                     gap: 10px;
 
-                    @include tablet{
+                    @include tablet {
                         flex-wrap: wrap;
                     }
-            
 
-                    a{
+
+                    a {
                         color: themed("textColorSoft");
                     }
 
                 }
 
-                .center{
-                    flex:1;
+                .center {
+                    flex: 1;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
-                    gap:10px;
+                    gap: 10px;
 
-                    span{
+                    span {
                         font-size: 30px;
                         font-weight: 500;
                     }
 
-                    .info{
+                    .info {
                         width: 100%;
                         display: flex;
                         align-items: center;
                         justify-content: space-around;
 
-                        .item{
+                        .item {
                             display: flex;
                             align-items: center;
                             gap: 5px;
                             color: themed("textColorSoft");
 
-                            span{
-                                font-size:12px;
+                            span {
+                                font-size: 12px;
                             }
                         }
                     }
-                    button{
+
+                    button {
                         border: none;
                         background-color: rgb(92, 92, 235);
                         color: white;
@@ -120,17 +122,67 @@
                     }
                 }
 
-                .right{
-                    flex:1;
-                    display:flex;
+                .right {
+                    flex: 1;
+                    display: flex;
                     align-items: center;
                     justify-content: flex-end;
-                    gap:10px;
+                    gap: 10px;
 
 
                 }
-        
+
             }
         }
+
+        .vetHelp {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+
+            overflow: scroll;
+
+            .container {
+                padding: 20px;
+                margin: 20px;
+                border-radius: 6%;
+                color: white;
+                background-color: rgb(249, 224, 251);
+
+                -webkit-box-shadow: 10px 10px 5px 0px rgba(238, 242, 230, 0.59);
+                -moz-box-shadow: 10px 10px 5px 0px rgba(238, 242, 230, 0.59);
+                box-shadow: 10px 10px 5px 0px rgba(238, 242, 230, 0.59);
+                background-color: themed("bg");
+                color: themed("textColor");
+                
+                span {
+                    font-size: 12px;
+                    font-weight: 20px;
+                    color: gray;
+                }
+      
+
+
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            border: none;
+            background-color: #f0544f;
+            padding: 5px;
+            cursor: pointer;
+            color: white;
+        }
+  
     }
 }

@@ -29,50 +29,56 @@ const Message = ({ message }) => {
 
     const handleAceptar = () => {
         setOpenMessage(true);
+        mutation.mutate({id: message.id, estado: 'Aceptado'});
     }
 
     const handleRechazar = () => {
         mutation.mutate({id: message.id, estado: 'Rechazado'});
     }
+        console.log("SOY ID DE MENSAJE: " + message.id)
 
+
+    console.log("SOY EL PROFILE PIC: " + message.profilePic)
 
 
     return (
-
-        (<div className="message">
-            <div className="container">
-                <div className="user">
-                    <div className="userInfo">
-                        <img src={"./upload" + message.profilePic} alt="" />
-                        <div className="details">
-                            <Link
-                                to={`/profile/${message.userId}`}
-                                style={{ textDecoration: "none", color: "inherit" }}
-                            >
-                                <span className="name">{message.name}</span>
-                            </Link>
-                            <span className="date">{moment(message.createdAt).fromNow()}</span>
+        <>
+        {(message.estado == "Aceptado" && currentUser.type == "Cuidador") ? "" : //si has aceptado el mensaje y eres cuidador no te sale, al cliente si
+            (<div className="message">
+                <div className="container">
+                    <div className="user">
+                        <div className="userInfo">
+                            <img src={"/upload/" + message.profilePic} alt="" className="profilePic"/>
+                            <div className="details">
+                                <Link
+                                    to={`/profile/${message.userId}`}
+                                    style={{ textDecoration: "none", color: "inherit" }}
+                                >
+                                    <span className="name">{message.name}</span>
+                                </Link>
+                                <span className="date">{moment(message.createdAt).fromNow()}</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="content">
-                    <p>{message.message}</p>
-                    <img src={"./upload/" + message.img} alt="" />
-                </div>
+                    <div className="content">
+                        <p>{message.message}</p>
+                        <img src={"/upload/" + message.img} alt="" />
+                    </div>
 
-                {(currentUser.type == "Cuidador" && message.estado == "Pendiente")
-                ? (<div className="container">
-                    <div className="answer">
-                        <button className="button-29-green" onClick={handleAceptar} style={{ width: "80px" }} >Aceptar</button>
-                    </div>
-                    <div className="answer">
-                        <button className="button-29-red" onClick={handleRechazar} style={{ width: "85px" }}>Rechazar</button>
-                    </div>
-                </div>) 
-                : ""}
-            </div>
-            {openMessage && <MessageSender setOpenMessage={setOpenMessage} userToMessage={message.followerUserId} />}
-        </div>)
+                    {(currentUser.type == "Cuidador" && message.estado == "Pendiente")
+                    ? (<div className="container">
+                        <div className="answer">
+                            <button className="button-29-green" onClick={handleAceptar} style={{ width: "80px" }}>Aceptar</button>
+                        </div>
+                        <div className="answer">
+                            <button className="button-29-red" onClick={handleRechazar} style={{ width: "85px" }}>Rechazar</button>
+                        </div>
+                    </div>) 
+                    : ""}
+                </div>
+                {openMessage && <MessageSender setOpenMessage={setOpenMessage} userToMessage={message.followerUserId} />}
+            </div>)}
+        </>
     )
 }
 

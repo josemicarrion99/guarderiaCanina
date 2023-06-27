@@ -10,11 +10,11 @@ export const getRelationships = (req, res) => {
   jwt.verify(token, "secretkey", (err, userInfo) => {
     if (err) return res.status(403).json("Token is not valid!");
 
-
     const q = "SELECT r.*, name, profilePic FROM relationships AS r JOIN users as u ON (u.id = r.followerUserId) WHERE followedUserId = ? AND r.estado != 'Rechazado'";
 
     db.query(q, [userInfo.id], (err, data) => {
       if (err) return res.status(500).json(err);
+      console.log(data);
       return res.status(200).json(data);
     });
   });

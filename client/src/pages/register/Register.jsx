@@ -12,10 +12,10 @@ const Register = () => {
         password: "",
         name: "",
         type: "",
+        phone: ""
     });
 
     const [err, setErr] = useState(null);
-
 
     const handleChange = (e) => {
         setInputs(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -23,7 +23,13 @@ const Register = () => {
 
     const handleClick = async (e) => {
         e.preventDefault();
+        if(inputs.email.trim().length === 0) return setErr("Rellene el campo email");
+        if(inputs.username.trim().length === 0) return setErr("Rellene el nombre de usuario");
+        if(inputs.name.trim().length === 0) return setErr("Rellene el campo nombre");
+        if(inputs.password.trim().length === 0) return setErr("Rellene el campo contraseña");
         if(inputs.type === "" || inputs.type === "vacia") return setErr("Escoja un tipo");
+        if(isNaN(+inputs.phone) || inputs.phone.trim().length === 0) return setErr("El número de teléfono no es válido");
+
 
         try{
             await axios.post("http://localhost:8800/api/auth/register", inputs);
@@ -49,10 +55,11 @@ const Register = () => {
                 <div className="right">
                     <h1>Registrese a continuación:</h1>
                     <form action="">
-                        <input type="text" placeholder="Username" name="username" onChange={handleChange} />
+                        <input type="text" placeholder="Nombre de usuario" name="username" onChange={handleChange} />
                         <input type="email" placeholder="Email" name="email" onChange={handleChange} />
-                        <input type="password" placeholder="Password" name="password" onChange={handleChange} />
-                        <input type="text" placeholder="Name" name="name" onChange={handleChange} />
+                        <input type="password" placeholder="Contraseña" name="password" onChange={handleChange} />
+                        <input type="text" placeholder="Nombre" name="name" onChange={handleChange} />
+                        <input type="text" placeholder="Número de teléfono" name="phone" onChange={handleChange} />
                         <span>¿Desea cuidar o buscar cuidador?</span>
                         <select name="type" defaultValue="Vacia" onChange={handleChange}>
                             <option value="vacia">Escoja una opción...</option>

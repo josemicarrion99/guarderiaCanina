@@ -27,6 +27,8 @@ const Post = ({ post }) => {
         })
     );
 
+    console.log(post.profilePic)
+
     //uso mutacion para hacer post en la bbdd y hacer fetch de nuevo
     const queryClient = useQueryClient();
     const mutation = useMutation(
@@ -72,7 +74,7 @@ const Post = ({ post }) => {
             <div className="container">
                 <div className="user">
                     <div className="userInfo">
-                        <img src={"./upload" + post.profilePic} alt="" />
+                        <img src={"./upload/" + post.profilePic} alt="" />
                         <div className="details">
                             <Link
                                 to={`/profile/${post.userId}`}
