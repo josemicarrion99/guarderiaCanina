@@ -48,11 +48,11 @@ const Message = ({ setOpenMessage, userToMessage }) => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    if(desc == "" || desc == " ") return;
+    if(desc === "" || desc === " ") return;
     let imgUrl = "";
     if(file) imgUrl = await upload();
       mutation.mutate({message: desc, img:imgUrl, followedUserId: userToMessage, estado: 'Pendiente'});
-      if(err == ""){ 
+      if(err === ""){ 
       }  
   };
 

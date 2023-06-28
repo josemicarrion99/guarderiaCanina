@@ -12,7 +12,6 @@ const Login = () => {
 
     const [err, setErr] = useState(null);
 
-    const navigate = useNavigate();
 
 
     const handleChange = (e) => {
@@ -21,6 +20,7 @@ const Login = () => {
 
     const { login } = useContext(AuthContext);
 
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();

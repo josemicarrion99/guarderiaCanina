@@ -35,15 +35,10 @@ const Message = ({ message }) => {
     const handleRechazar = () => {
         mutation.mutate({id: message.id, estado: 'Rechazado'});
     }
-        console.log("SOY ID DE MENSAJE: " + message.id)
-
-
-    console.log("SOY EL PROFILE PIC: " + message.profilePic)
-
 
     return (
         <>
-        {(message.estado == "Aceptado" && currentUser.type == "Cuidador") ? "" : //si has aceptado el mensaje y eres cuidador no te sale, al cliente si
+        {(message.estado === "Aceptado" && currentUser.type === "Cuidador") ? "" : //si has aceptado el mensaje y eres cuidador no te sale, al cliente si
             (<div className="message">
                 <div className="container">
                     <div className="user">
@@ -65,7 +60,7 @@ const Message = ({ message }) => {
                         <img src={"/upload/" + message.img} alt="" />
                     </div>
 
-                    {(currentUser.type == "Cuidador" && message.estado == "Pendiente")
+                    {(currentUser.type === "Cuidador" && message.estado === "Pendiente")
                     ? (<div className="container">
                         <div className="answer">
                             <button className="button-29-green" onClick={handleAceptar} style={{ width: "80px" }}>Aceptar</button>

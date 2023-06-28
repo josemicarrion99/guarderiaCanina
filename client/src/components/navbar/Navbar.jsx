@@ -1,8 +1,5 @@
 import "./navbar.scss"
-import HomeIcon from '@mui/icons-material/Home';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import GridViewIcon from '@mui/icons-material/GridView';
-import SearchIcon from '@mui/icons-material/Search';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';

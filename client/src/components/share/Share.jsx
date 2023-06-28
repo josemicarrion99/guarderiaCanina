@@ -1,6 +1,5 @@
 import "./share.scss";
 import ImageIcon from '@mui/icons-material/Image';
-import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -39,7 +38,7 @@ const Share = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    if(desc == "" || desc == " ") return;
+    if(desc === "" || desc === " ") return;
     let imgUrl = "";
     if(file) imgUrl = await upload();
     mutation.mutate({desc, img:imgUrl});

@@ -23,19 +23,7 @@ export const updateUser = (req, res) => {
     const q =
       "UPDATE users SET `name`=?,`city`=?,`website`=?,`profilePic`=?,`coverPic`=?, `phone`=? WHERE id=? ";
 
-      // // console.log(db.query(
-      //   q,
-      //   [
-      //     req.body.name,
-      //     req.body.city,
-      //     req.body.website,
-      //     req.body.profilePic,
-      //     req.body.coverPic,
-      //     req.body.phone,
-      //     userInfo.id,
-      //   ]));
-  
-    db.query(
+      db.query(
       q,
       [
         req.body.name,
