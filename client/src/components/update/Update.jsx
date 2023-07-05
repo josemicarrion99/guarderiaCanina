@@ -3,7 +3,7 @@ import { makeRequest } from "../../axios";
 import "./update.scss";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { confirmAlert } from 'react-confirm-alert';
+// import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from "react-router-dom";
 
 
@@ -12,7 +12,6 @@ const Update = ({ setOpenUpdate, user }) => {
     const [profile, setProfile] = useState("");
 
 
-    console.log(cover)
     const navigate = useNavigate();
 
     const [texts, setTexts] = useState({
@@ -73,9 +72,6 @@ const Update = ({ setOpenUpdate, user }) => {
         let profileUrl;
         coverUrl = cover ? await upload(cover) : user.coverPic;
         profileUrl = profile ? await upload(profile) : user.profilePic;
-
-        console.log(coverUrl);
-        console.log(cover)
 
         mutationUpdateUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
         setOpenUpdate(false);

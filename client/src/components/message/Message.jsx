@@ -2,6 +2,7 @@ import "./message.scss"
 import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import moment from "moment";
+import 'moment/locale/es'  
 
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
@@ -10,6 +11,8 @@ import { AuthContext } from "../../context/authContext";
 import MessageSender from "../../components/sendMessage/SendMessage"
 
 const Message = ({ message }) => {
+
+    moment.locale('es')
 
     const [openMessage, setOpenMessage] = useState(false);
     const {currentUser} = useContext(AuthContext);

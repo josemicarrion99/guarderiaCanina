@@ -17,7 +17,7 @@ const Navbar = () => {
         <div className="navbar">
             <div className="left">
                 <Link to="/" style={{ textDecoration: "none" }}>
-                    <span>Guarderia canina</span>
+                    <span>Dog sitter</span>
                 </Link>
                 <Link to={"/profile/" + currentUser.id}  >
                     <PersonIcon />
@@ -43,7 +43,7 @@ const Navbar = () => {
                 </Link> */}
 
                 <div className="user">
-                    <img src={currentUser.profilePic} alt="" />
+                    <img src={"/upload/" + currentUser.profilePic} alt="" />
                     <span>{currentUser.name}</span>
                 </div>
             </div>

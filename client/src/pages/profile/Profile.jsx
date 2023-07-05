@@ -74,7 +74,7 @@ const Profile = () => {
                                 <a href="http://twitter.com">
                                     <TwitterIcon />
                                 </a>
-                                {(currentUser.id === userId && data.type === "Cuidador") 
+                                {(currentUser.id === userId && currentUser.type === "Cuidador") 
                                 ? (<MedicalServicesIcon style={{cursor:"pointer", color:"red"}} onClick={showVetContact}/>)
                                 : ""}
                             </div>
@@ -112,7 +112,7 @@ const Profile = () => {
                                             : "" 
                                 } */}
                                 {userId === currentUser.id
-                                    ? (<button onClick={() => setOpenUpdate(true)} className="button-29-purple" >Update</button>)
+                                    ? (<button onClick={() => setOpenUpdate(true)} className="button-29-purple" >Modificar</button>)
                                     : (<button onClick={contactar} className="button-29-purple" >Contactar</button>)
                                 }
 
@@ -120,7 +120,6 @@ const Profile = () => {
                             <div className="right">
                                 <WhatsAppIcon />
                                 <span>{data.phone}</span>
-                                {/* <MoreVertIcon /> */}
                             </div>
                         </div>
                         {/* Si es tu propio perfil no muestra posts porque hay que mostrar mensajes */}

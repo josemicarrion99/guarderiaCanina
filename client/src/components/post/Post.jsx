@@ -1,13 +1,13 @@
 import "./post.scss"
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import IosShareIcon from '@mui/icons-material/IosShare';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 
 import { Link } from "react-router-dom";
 import Comments from "../comments/Comments"
 import { useState, useContext } from "react";
 import moment from "moment";
+import 'moment/locale/es'  
 
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
@@ -16,17 +16,15 @@ import { AuthContext } from "../../context/authContext";
 
 const Post = ({ post }) => {
 
-    const [commentOpen, setCommentOpen] = useState(false);
+    moment.locale('es')
 
+    const [commentOpen, setCommentOpen] = useState(false);
     const { currentUser } = useContext(AuthContext);
 
     const { isLoading, error, data } = useQuery(["likes", post.id], () =>
         makeRequest.get("/likes?postId=" + post.id).then((res) => {
             return res.data;
         })
-
-
-
     );
 
     //uso mutacion para hacer post en la bbdd y hacer fetch de nuevo
@@ -111,9 +109,6 @@ const Post = ({ post }) => {
                             </div>
                             <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
                                 <ChatBubbleOutlineIcon />
-                            </div>
-                            <div className="item">
-                                <IosShareIcon />
                             </div>
                         </div>
                         {commentOpen && <Comments postId={post.id} />}
