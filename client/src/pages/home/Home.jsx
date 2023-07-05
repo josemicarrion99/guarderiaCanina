@@ -1,9 +1,7 @@
 import "./home.scss"
 import Posts from "../../components/posts/Posts"
 import Share from "../../components/share/Share"
-// import AddressSearch from "../../components/map/Map"
-// import DistanceCalculator from "../../components/map/DistanceCalculator"
-import MapsChatGPT from "../../components/map/MapsChatGPT"
+import Map from "../../components/map/Map"
 
 
 import { useContext } from "react";
@@ -22,8 +20,8 @@ const Home = () => {
         <div className="home">
             {/* <AddressSearch onPlaceSelect={handlePlaceSelect} /> */}
             {/* <DistanceCalculator/> */}
-            {/* <MapsChatGPT/> */}
-            {currentUser.type === "Cuidador" ? <Share/> : ""}
+            <Map enterLocation={true}/>
+            {/* {currentUser.type === "Cuidador" ? <Share/> : ""} */}
             <Posts/>
         </div>
     )
