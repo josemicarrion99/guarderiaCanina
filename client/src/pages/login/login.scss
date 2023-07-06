@@ -25,6 +25,11 @@
         border-radius: 10px;
         min-height: 600px;
         overflow: hidden;
+        
+        @include mobile {
+        flex-direction: column;
+        }
+
 
         .left {
             //al ponerlo de esta forma si que me sale la imagen

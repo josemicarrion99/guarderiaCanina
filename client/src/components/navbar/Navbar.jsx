@@ -17,7 +17,7 @@ const Navbar = () => {
         <div className="navbar">
             <div className="left">
                 <Link to="/" style={{ textDecoration: "none" }}>
-                    <span>Dog sitter</span>
+                    <span>Guardería canina</span>
                 </Link>
                 <Link to={"/profile/" + currentUser.id}  >
                     <PersonIcon />

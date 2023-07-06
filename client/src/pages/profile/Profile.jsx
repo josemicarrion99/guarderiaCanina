@@ -71,7 +71,7 @@ const Profile = () => {
                     <div className="profileContainer">
                         <div className="uInfo">
                             <div className="left">
-                                <a href="http://facebook.com">
+                                {/* <a href="http://facebook.com">
                                     <FacebookIcon />
                                 </a>
                                 <a href="http://instagram.com">
@@ -79,7 +79,7 @@ const Profile = () => {
                                 </a>
                                 <a href="http://twitter.com">
                                     <TwitterIcon />
-                                </a>
+                                </a> */}
                                 {(currentUser.id === userId && currentUser.type === "Cuidador") 
                                 ? (<MedicalServicesIcon style={{cursor:"pointer", color:"red"}} onClick={showVetContact}/>)
                                 : ""}
@@ -117,7 +117,7 @@ const Profile = () => {
                 <div className="vetHelp">
                     <div className="container">
                         <span>El veterinari@ Marina Pérez está disponible</span>
-                        <h5>601 98 76 45</h5>
+                        <h5 style={{backgroundColor:'red'}}>601 98 76 45</h5>
                     </div>
                     <button className="close" onClick={() => setOpenVetHelp(false)}>&nbsp; X &nbsp; </button>
                 </div>

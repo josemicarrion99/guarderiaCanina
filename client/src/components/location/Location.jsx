@@ -1,17 +1,7 @@
-import {
-  Button,
-  ButtonGroup,
-  HStack,
-  Input,
-  SkeletonText,
-} from '@chakra-ui/react'
 
 import {
   useJsApiLoader,
-  GoogleMap,
-  Marker,
   Autocomplete,
-  DirectionsRenderer,
 } from '@react-google-maps/api'
 import { useRef, useState } from 'react'
 
@@ -29,8 +19,6 @@ function Location({ setOpenLocation, user }) {
     libraries: ['places'],
   })
 
-  const [map, setMap] = useState(/** @type google.maps.Map */(null))
-  const [directionsResponse, setDirectionsResponse] = useState(null)
 
   const locationRef = useRef()
 
@@ -52,6 +40,10 @@ function Location({ setOpenLocation, user }) {
     }
   );
 
+
+  if (!isLoaded) {
+    return <div>Ha occurrido algun error...</div> 
+  }
 
   async function saveLocation() {
     if(locationRef.current.value === ''){

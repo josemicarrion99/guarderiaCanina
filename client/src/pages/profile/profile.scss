@@ -58,9 +58,12 @@
 
                 margin-bottom: 20px;
 
+                gap: 10px;
+
+
                 @include mobile {
                     flex-direction: column;
-                    height: 30vh;
+                    height: auto;
                     padding: 20px;
                     margin-top: 100px;
                 }
@@ -163,6 +166,11 @@
                 box-shadow: 10px 10px 5px 0px rgba(238, 242, 230, 0.59);
                 background-color: themed("bg");
                 color: themed("textColor");
+
+                // display: flex;
+                align-items: center;
+                justify-content: center;
+    
                 
                 span {
                     font-size: 12px;

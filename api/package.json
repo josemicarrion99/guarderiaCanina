@@ -14,8 +14,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
-    "test": "mocha ./src/tests/*Test.js"
+    "start": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
