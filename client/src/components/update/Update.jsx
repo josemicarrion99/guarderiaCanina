@@ -19,7 +19,7 @@ const Update = ({ setOpenUpdate, user }) => {
         password: user.password,
         name: user.name,
         city: user.city,
-        website: user.website,
+        language: user.language,
         phone: user.phone
     });
 
@@ -152,18 +152,18 @@ const Update = ({ setOpenUpdate, user }) => {
                             name="name"
                             onChange={handleChange}
                         />
-                        <label>Country / City</label>
+                        {/* <label>Country / City</label>
                         <input
                             type="text"
                             name="city"
                             value={texts.city}
                             onChange={handleChange}
-                        />
-                        <label>Website</label>
+                        /> */}
+                        <label>Language</label>
                         <input
                             type="text"
-                            name="website"
-                            value={texts.website}
+                            name="language"
+                            value={texts.language}
                             onChange={handleChange}
                         />
                         <label>Phone number</label>

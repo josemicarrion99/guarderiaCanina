@@ -5,17 +5,17 @@ import { DarkModeContextProvider } from './context/darkModeContext';
 import { AuthContextProvider } from './context/authContext';
 
 
-import { ChakraProvider, theme } from '@chakra-ui/react'
+// import { ChakraProvider, theme } from '@chakra-ui/react'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <DarkModeContextProvider>
       <AuthContextProvider>
-      <ChakraProvider theme={theme}>
+      {/* <ChakraProvider theme={theme}> */}
         {/* En App tenemos todo el html de toda la aplicacion */}
         <App />
-        </ChakraProvider>
+        {/* </ChakraProvider> */}
       </AuthContextProvider>
     </DarkModeContextProvider>
   </React.StrictMode>

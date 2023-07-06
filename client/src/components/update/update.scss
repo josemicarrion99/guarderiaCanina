@@ -25,10 +25,10 @@
 
 
             .wrapper {
-                margin: auto;
+                margin: 10px;
                 width: 60%;
                 height: 70%;
-                background-color: themed("bg");
+                // background-color: themed("bg");
                 padding: 50px;
                 z-index: 999;
                 display: flex;
@@ -40,8 +40,8 @@
                 position: relative;
 
                 @include mobile {
-                    width: 70%;
-                    height: 90%;
+                    width: 95%;
+                    height: 95%;
                 }
 
                 h1 {

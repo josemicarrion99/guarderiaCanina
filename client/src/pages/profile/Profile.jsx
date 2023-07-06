@@ -11,6 +11,7 @@ import Messages from "../../components/messages/Messages"
 import Update from "../../components/update/Update"
 import MessageSender from "../../components/sendMessage/SendMessage"
 import MedicalServicesIcon from '@mui/icons-material/MedicalServices';
+import Location from "../../components/location/Location";
 
 import { useQuery } from '@tanstack/react-query';
 import { makeRequest } from "../../axios";
@@ -23,6 +24,7 @@ const Profile = () => {
     const [openUpdate, setOpenUpdate] = useState(false);
     const [openMessage, setOpenMessage] = useState(false);
     const [openVetHelp, setOpenVetHelp] = useState(false);
+    const [openLocation, setOpenLocation] = useState(false);
 
     const { currentUser } = useContext(AuthContext);
 
@@ -50,6 +52,10 @@ const Profile = () => {
 
     const showVetContact = () => {
         setOpenVetHelp(true);
+    }
+
+    const enterLocation = () => {
+        setOpenLocation(true);
     }
 
     return (
@@ -82,40 +88,18 @@ const Profile = () => {
                                 <span>{data.name}</span>
                                 <div className="info">
                                     <div className="item">
-                                        <MapIcon />
+                                        <MapIcon onClick={enterLocation} style={{cursor:'pointer', color:'lightgreen'}}/>
                                         <span>{data.city}</span>
                                     </div>
                                     <div className="item">
                                         <LanguageIcon />
-                                        <span>{data.website}</span>
+                                        <span>{data.language}</span>
                                     </div>
                                 </div>
-                                {/* {relationshipIsLoading  
-                                    ? "loading"
-                                    : userId === currentUser.id
-                                        ? (<button onClick={() => setOpenUpdate(true)}>Update</button>)
-                                        : currentUser.type == 'Cliente' 
-                                            ? (<button onClick={() => setOpenMessage(true)}>
-                                            {relationshipData.includes(currentUser.id)
-                                                ? "Contactado recientemente"
-                                                : "Contactar"}</button>) 
-                                            : "" 
-                                } */}
-                                {/* {relationshipIsLoading
-                                    ? "loading"
-                                    : userId === currentUser.id
-                                        ? (<button onClick={() => setOpenUpdate(true)}>Update</button>)
-                                        : currentUser.type == 'Cliente' 
-                                            ? (<button onClick={relationshipData.includes(currentUser.id)
-                                                ? contactadoRecientemente
-                                                : contactar}>Contactar</button>) 
-                                            : "" 
-                                } */}
                                 {userId === currentUser.id
                                     ? (<button onClick={() => setOpenUpdate(true)} className="button-29-purple" >Modificar</button>)
                                     : (<button onClick={contactar} className="button-29-purple" >Contactar</button>)
                                 }
-
                             </div>
                             <div className="right">
                                 <WhatsAppIcon />
@@ -138,6 +122,7 @@ const Profile = () => {
                     <button className="close" onClick={() => setOpenVetHelp(false)}>&nbsp; X &nbsp; </button>
                 </div>
             )}
+            {openLocation && <Location setOpenLocation={setOpenLocation} user={data}/>}
         </div>
     );
 }

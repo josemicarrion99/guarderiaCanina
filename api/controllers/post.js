@@ -24,7 +24,7 @@ export const getPosts = (req, res) => {
                 ? `SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId AND u.city = ?) ORDER BY p.createdAt DESC`  
                 : `SELECT DISTINCT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId)  WHERE p.userId = ? ORDER BY p.createdAt DESC`);
 
-                
+                console.log(q);
         const values =
             userInfo.type === "Cuidador"
             ? [userInfo.id]
@@ -33,6 +33,7 @@ export const getPosts = (req, res) => {
                 : [userId]);
                 
 
+                console.log(userInfo.city)
         db.query(q, values, (err, data) => {
             if (err) return res.status(500).json(err);
             return res.status(200).json(data);

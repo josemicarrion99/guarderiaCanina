@@ -3,6 +3,10 @@ import "./login.scss"
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/authContext";
 
+import { useQuery } from '@tanstack/react-query';
+import { makeRequest } from "../../axios";
+
+
 const Login = () => {
 
     const [inputs, setInputs] = useState({
@@ -32,6 +36,11 @@ const Login = () => {
             setErr(err.response.data)
         }
     };
+
+/* =========================================================================================
+1. hacemos get de todas las ciudades donde no tenemos su distancia a otra ciudad
+*/
+
 
     return (
         <div className="login">
