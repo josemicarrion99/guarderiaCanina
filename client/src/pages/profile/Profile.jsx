@@ -1,7 +1,4 @@
 import "./profile.scss"
-import FacebookIcon from '@mui/icons-material/Facebook';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import MapIcon from '@mui/icons-material/Map';
 import LanguageIcon from '@mui/icons-material/Language';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
@@ -39,12 +36,6 @@ const Profile = () => {
         },)
     );
 
-    // const { isLoading: relationshipIsLoading, data: relationshipData } = useQuery(
-    //     ["relationship"], () =>
-    //     makeRequest.get("/relationships?followedUserId=" + userId).then((res) => {
-    //         return res.data;
-    //     })
-    // );
 
     const contactar = () => {
         setOpenMessage(true);
@@ -71,15 +62,6 @@ const Profile = () => {
                     <div className="profileContainer">
                         <div className="uInfo">
                             <div className="left">
-                                {/* <a href="http://facebook.com">
-                                    <FacebookIcon />
-                                </a>
-                                <a href="http://instagram.com">
-                                    <InstagramIcon />
-                                </a>
-                                <a href="http://twitter.com">
-                                    <TwitterIcon />
-                                </a> */}
                                 {(currentUser.id === userId && currentUser.type === "Cuidador") 
                                 ? (<MedicalServicesIcon style={{cursor:"pointer", color:"red"}} onClick={showVetContact}/>)
                                 : ""}

@@ -1,17 +1,12 @@
-
+import './location.scss';
 import {
   useJsApiLoader,
   Autocomplete,
 } from '@react-google-maps/api'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 import { makeRequest } from "../../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-
-
-import './location.scss';
-
-const center = { lat: 48.8584, lng: 2.2945 }
 
 function Location({ setOpenLocation, user }) {
   const { isLoaded } = useJsApiLoader({
