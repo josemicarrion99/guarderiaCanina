@@ -5,6 +5,9 @@ import {
 } from '@react-google-maps/api'
 import { useRef } from 'react'
 
+import { useContext } from "react";
+import { AuthContext } from "../../context/authContext";
+
 import { makeRequest } from "../../axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
@@ -16,9 +19,6 @@ function Location({ setOpenLocation, user }) {
 
 
   const locationRef = useRef()
-
-  console.log(locationRef)
-
 
   const queryClient = useQueryClient();
 
@@ -39,6 +39,7 @@ function Location({ setOpenLocation, user }) {
   if (!isLoaded) {
     return <div>Ha occurrido algun error...</div> 
   }
+
 
   async function saveLocation() {
     if(locationRef.current.value === ''){

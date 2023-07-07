@@ -10,7 +10,6 @@ import { AuthContext } from "../../context/authContext";
 const Home = () => {
     const { currentUser } = useContext(AuthContext);
 
-
     return(
         <div className="home">
             {currentUser.type === "Cuidador" ? <Share/> : ""}

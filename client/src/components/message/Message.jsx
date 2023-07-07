@@ -32,7 +32,7 @@ const Message = ({ message }) => {
 
     const handleAceptar = () => {
         setOpenMessage(true);
-        mutation.mutate({id: message.id, estado: 'Aceptado'});
+        // mutation.mutate({id: message.id, estado: 'Aceptado'});
     }
 
     const handleRechazar = () => {
@@ -49,7 +49,7 @@ const Message = ({ message }) => {
                             <img src={"/upload/" + message.profilePic} alt="" className="profilePic"/>
                             <div className="details">
                                 <Link
-                                    to={`/profile/${message.userId}`}
+                                    to={`/profile/${message.followerUserId}`}
                                     style={{ textDecoration: "none", color: "inherit" }}
                                 >
                                     <span className="name">{message.name}</span>
@@ -74,7 +74,7 @@ const Message = ({ message }) => {
                     </div>) 
                     : ""}
                 </div>
-                {openMessage && <MessageSender setOpenMessage={setOpenMessage} userToMessage={message.followerUserId} />}
+                {openMessage && <MessageSender setOpenMessage={setOpenMessage} userToMessage={message.followerUserId} clearMessage={message.id} />}
             </div>)}
         </>
     )

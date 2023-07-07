@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { makeRequest } from "../../axios";
 
 
-const Message = ({ setOpenMessage, userToMessage }) => {
+const Message = ({ setOpenMessage, userToMessage, clearMessage }) => {
 
   //objeto imagen y descripcion para crear el post
   const [file, setFile] = useState(null);
@@ -23,7 +23,7 @@ const Message = ({ setOpenMessage, userToMessage }) => {
       const res = await makeRequest.post("/upload", formData);
       return res.data;
     }catch(error){
-      // setErr(error.response.data)
+      setErr(error.response.data)
     };
   };
 
@@ -46,12 +46,31 @@ const Message = ({ setOpenMessage, userToMessage }) => {
     }
   });
 
+  const mutationUpdate = useMutation((newMessage) => {
+    return makeRequest.put("/relationships", newMessage);
+  }, {
+    onSuccess: () => {//si no ha habido ningun error cerramos la ventan
+      queryClient.invalidateQueries(["relationships"]);  
+    },
+    onError: (error) => {
+      console.log(error.response.data);      
+    }
+  });
+
+  
+
   const handleClick = async (e) => {
     e.preventDefault();
     if(desc === "" || desc === " ") return;
     let imgUrl = "";
     if(file) imgUrl = await upload();
-      mutation.mutate({message: desc, img:imgUrl, followedUserId: userToMessage, estado: 'Pendiente'});
+      if(currentUser.type === 'Cliente'){
+        mutation.mutate({message: desc, img:imgUrl, followedUserId: userToMessage, estado: 'Pendiente'});
+      }else{
+        mutation.mutate({message: desc, img:imgUrl, followedUserId: userToMessage, estado: 'Aceptado'});
+        mutationUpdate.mutate({id: clearMessage, estado: 'Aceptado'});
+
+      }
       if(err === ""){ 
       }  
   };

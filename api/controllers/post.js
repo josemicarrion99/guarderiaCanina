@@ -11,34 +11,41 @@ export const getPosts = (req, res) => {
 
     if (!token) return res.status(401).json("Not logged in!");
 
+
     jwt.verify(token, "secretkey", (err, userInfo) => {
         if (err) return res.status(403).json("Token is not valid!");
 
-        // 1 => cuidadores home lo que han subido con el pineado arriba
-        // 2 => clientes home que salgan posts de su ciudad
-        // 3 => clientes profile de cuidador sale lo que han subido con el pineado arriba 
-        const q =
-            userInfo.type === "Cuidador"
-            ? "SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId) WHERE p.userId = ? ORDER BY p.createdAt DESC"
-            : (userId === "undefined"
-                ? `SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId AND u.city = ?) ORDER BY p.createdAt DESC`  
-                : `SELECT DISTINCT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId)  WHERE p.userId = ? ORDER BY p.createdAt DESC`);
+        const query = "SELECT * FROM users WHERE id=?";
+      
+        db.query(query, [userInfo.id], (err, fethcedUser) => {
+          if (err) return res.status(500).json(err);
+      
+            // 1 => cuidadores home lo que han subido con el pineado arriba
+            // 2 => clientes home que salgan posts de su ciudad
+            // 3 => clientes profile de cuidador sale lo que han subido con el pineado arriba 
+            const q =
+                userInfo.type === "Cuidador"
+                ? "SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId) WHERE p.userId = ? ORDER BY p.createdAt DESC"
+                : (userId === "undefined"
+                    ? `SELECT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId AND u.city = ?) ORDER BY p.createdAt DESC`  
+                    : `SELECT DISTINCT p.*, u.id as userId, name, profilePic FROM posts AS p JOIN users as u ON (u.id = p.userId)  WHERE p.userId = ? ORDER BY p.createdAt DESC`);
 
-                console.log(q);
-        const values =
-            userInfo.type === "Cuidador"
-            ? [userInfo.id]
-            : (userId === "undefined" 
-                ? [userInfo.city] 
-                : [userId]);
+
+            const values =
+                userInfo.type === "Cuidador"
+                ? [userInfo.id]
+                : (userId === "undefined" 
+                    ? [fethcedUser[0].city] 
+                    : [userId]);
+                    
                 
-
-                console.log(userInfo.city)
-        db.query(q, values, (err, data) => {
-            if (err) return res.status(500).json(err);
-            return res.status(200).json(data);
+            db.query(q, values, (err, data) => {
+                if (err) return res.status(500).json(err);
+                return res.status(200).json(data);
+            });
         });
-    });
+
+        });
 
 
 };

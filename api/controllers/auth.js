@@ -10,7 +10,6 @@ export const register = (req, res) => {
         if (err) return res.status(500).json(err);
         if (data.length) return res.status(409).json("Usuario ya existe");
 
-        console.log(data)
 
         const salt = bcrypt.genSaltSync(10);
         const hashedPassword = bcrypt.hashSync(req.body.password, salt);
@@ -20,7 +19,6 @@ export const register = (req, res) => {
         const values = [req.body.username, req.body.email, hashedPassword, req.body.name, req.body.type, req.body.phone];
 
         db.query(q, [values], (err, data) => {
-            console.log(err)
 
             if (err) return res.status(500).json(err);
             return res.status(200).json("User has been created");
@@ -61,6 +59,8 @@ export const login = (req, res) => {
             .json(others);
     });
 };
+
+
 
 export const logout = (req, res) => {
     res.clearCookie("accessToken", {

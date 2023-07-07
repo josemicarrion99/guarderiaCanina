@@ -34,9 +34,6 @@ const Login = () => {
         }
     };
 
-/* =========================================================================================
-1. hacemos get de todas las ciudades donde no tenemos su distancia a otra ciudad
-*/
 
 
     return (
