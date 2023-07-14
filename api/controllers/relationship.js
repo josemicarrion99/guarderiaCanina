@@ -99,3 +99,11 @@ export const updateRelationship = (req, res) => {
     );
   });
 };
+
+export const findRelationship = (req, respon) => {
+  const q = "SELECT * FROM guarderia.relationships WHERE followerUserId = ? AND followedUserId = ? AND estado = 'ACEPTADO';";
+  db.query(q, [req.query.userId, req.query.currentUserId], (err, data) => {
+    if (err) return res.status(500).json(err);
+    return respon.status(200).json(data);
+  });
+};

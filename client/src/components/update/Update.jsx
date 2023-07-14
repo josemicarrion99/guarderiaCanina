@@ -1,23 +1,26 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { makeRequest } from "../../axios";
 import "./update.scss";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-// import { confirmAlert } from 'react-confirm-alert';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/authContext";
+
 
 
 const Update = ({ setOpenUpdate, user }) => {
     const [cover, setCover] = useState("");
     const [profile, setProfile] = useState("");
 
+    const { currentUser } = useContext(AuthContext);
 
     const navigate = useNavigate();
 
     const [texts, setTexts] = useState({
         email: user.email,
         password: user.password,
-        name: user.name,
+        confirmPassword: user.confirmPassword,
+        username: user.username,
         city: user.city,
         language: user.language,
         phone: user.phone
@@ -53,9 +56,23 @@ const Update = ({ setOpenUpdate, user }) => {
         }
     );
 
-    const mutationDeleteUser = useMutation(
+    const mutationUpdateUserPassword = useMutation(
         (user) => {
-            return makeRequest.delete("/users", user);
+            return makeRequest.put("/users/password", user);
+        },
+        {
+            onSuccess: () => {
+                // Invalidate and refetch
+                queryClient.invalidateQueries(["users"]);
+                window.location.reload(false);
+            },
+        }
+    );
+
+
+    const mutationDeleteUser = useMutation(
+        (userId) => {
+            return makeRequest.delete("/users/" + userId);
         },
         {
             onSuccess: () => {
@@ -73,29 +90,32 @@ const Update = ({ setOpenUpdate, user }) => {
         coverUrl = cover ? await upload(cover) : user.coverPic;
         profileUrl = profile ? await upload(profile) : user.profilePic;
 
-        mutationUpdateUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
-        setOpenUpdate(false);
-        setCover(null);
-        setProfile(null);
+        if(texts.password === undefined && texts.confirmPassword === undefined){
+            mutationUpdateUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
+            setOpenUpdate(false);
+            setCover(null);
+            setProfile(null);
+
+        }else{
+
+            if(texts.password === undefined || texts.confirmPassword === undefined || texts.password[0] !== texts.confirmPassword[0]){
+                alert("Las contraseñas no coinciden")
+            }else{
+
+                mutationUpdateUserPassword.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
+                setOpenUpdate(false);
+                setCover(null);
+                setProfile(null);
+            }
+        }
     }
 
-    // const handleDelete = async (e) => {
-
-    //     mutationDeleteUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
-    // }
 
     const handleDelete = async (e) => {
         e.preventDefault();
 
-        let coverUrl;
-        let profileUrl;
-        coverUrl = cover ? await upload(cover) : user.coverPic;
-        profileUrl = profile ? await upload(profile) : user.profilePic;
-
-        mutationDeleteUser.mutate({ ...texts, coverPic: coverUrl, profilePic: profileUrl });
+        mutationDeleteUser.mutate(currentUser.id);
         setOpenUpdate(false);
-        setCover(null);
-        setProfile(null);
     }
 
 
@@ -107,7 +127,7 @@ const Update = ({ setOpenUpdate, user }) => {
                     <form>
                         <div className="files">
                             <label htmlFor="cover">
-                                <span>Cover Picture</span>
+                                <span>Imagen de fondo</span>
                                 <div className="imgContainer">
                                     <CloudUploadIcon className="icon" />
                                 </div>
@@ -119,7 +139,7 @@ const Update = ({ setOpenUpdate, user }) => {
                                 onChange={(e) => setCover(e.target.files[0])}
                             />
                             <label htmlFor="profile">
-                                <span>Profile Picture</span>
+                                <span>Imagen de perfil</span>
                                 <div className="imgContainer">
                                     <CloudUploadIcon className="icon" />
                                 </div>
@@ -138,18 +158,26 @@ const Update = ({ setOpenUpdate, user }) => {
                             name="email"
                             onChange={handleChange}
                         />
-                        <label>Password</label>
+                        <label>Contraseña</label>
                         <input
                             type="text"
                             value={texts.password}
                             name="password"
                             onChange={handleChange}
                         />
-                        <label>Name</label>
+                        <label>Repite la contraseña</label>
                         <input
                             type="text"
-                            value={texts.name}
-                            name="name"
+                            value={texts.confirmPassword}
+                            name="confirmPassword"
+                            onChange={handleChange}
+                        />
+
+                        <label>Nombre de usuario</label>
+                        <input
+                            type="text"
+                            value={texts.username}
+                            name="username"
                             onChange={handleChange}
                         />
                         {/* <label>Country / City</label>
@@ -159,14 +187,14 @@ const Update = ({ setOpenUpdate, user }) => {
                             value={texts.city}
                             onChange={handleChange}
                         /> */}
-                        <label>Language</label>
+                        <label>Idiomas</label>
                         <input
                             type="text"
                             name="language"
                             value={texts.language}
                             onChange={handleChange}
                         />
-                        <label>Phone number</label>
+                        <label>Número de contacto</label>
                         <input
                             type="text"
                             name="phone"

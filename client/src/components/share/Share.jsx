@@ -38,7 +38,7 @@ const Share = () => {
 
   const handleClick = async (e) => {
     e.preventDefault();
-    if(desc === "" || desc === " ") return;
+    if(file === "" || desc === " ") return;
     let imgUrl = "";
     if(file) imgUrl = await upload();
     mutation.mutate({desc, img:imgUrl});
@@ -52,7 +52,7 @@ const Share = () => {
         <div className="top">
           <div className="left">
             <img src={"/upload/" + currentUser.profilePic} alt="" />
-            <input type="text" onChange={(e) => setDesc(e.target.value)} value={desc}/>
+            <input type="text" placeholder="¿Qué tienes en mente?" onChange={(e) => setDesc(e.target.value)} value={desc}/>
           </div>
           <div className="right">
             {/* si añadimos una foto creamos un link falso para ver la imagen de manera previa */}
@@ -66,17 +66,9 @@ const Share = () => {
             <label htmlFor="file">
               <div className="item">
                 <ImageIcon/>
-                <span>Add Image</span>
+                <span>Añadir imagen</span>
               </div>
             </label>
-            {/* <div className="item">
-              <AddLocationAltIcon/>
-              <span>Add Place</span>
-            </div> */}
-            {/* <div className="item">
-              <img src={Friend} alt="" />
-              <span>Tag Friends</span>
-            </div> */}
           </div>
           <div className="right">
             <button className="button-29-purple" onClick={handleClick}>Compartir</button>
