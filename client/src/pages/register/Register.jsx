@@ -32,7 +32,7 @@ const Register = () => {
 
 
         try{
-            await axios.post("http://localhost:8800/api/auth/register", inputs);
+            await axios.post("http://192.168.56.1:3001/api/auth/register", inputs);
             navigate("/login");
 
         }catch(err){

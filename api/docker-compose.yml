@@ -1,0 +1,57 @@
+services:
+  mysqldb:
+    container_name: mysqlcontainer
+    image: mysql:8.0
+    command: --default-authentication-plugin=caching_sha2_password
+    restart: always
+    volumes:
+       - ./init.sql:/docker-entrypoint-initdb.d/0_init.sql
+       - /database:/var/lib/mysql
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      MYSQL_DATABASE: guarderia
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 'admin'
+      MYSQL_ROOT_PASSWORD: 'root'
+      SERVICE_TAGS: prod
+      SERVICE_NAME: mysqldb
+    networks:
+      - internalnet #name of the network where i am going to put both the node application and db
+
+  nodeapp:
+    restart: always
+    container_name: nodeappcontainer
+    build: . #it is built in the same dir
+    image: nodeapp:v1 #name of image
+    ports:
+      - 3001:3001
+    expose:
+      - 3001
+    depends_on: 
+      - mysqldb # we connect it to db service
+    environment:
+      DB_HOST: mysqldb
+      DB_USER: root
+      DB_PASSWORD: 'root'
+      DB_NAME: guarderia
+      DB_PORT: 3306
+      DB_CONNECTION_LIMIT: 10
+      SERVER_PORT: 3001
+      SERVICE_TAGS: prod
+      SERVICE_NAME: nodeappservice
+    networks:
+      - internalnet #name of the network where i am going to put both the node application and db
+
+networks:
+  internalnet:
+    driver: bridge
+
+#netstat -ano
+#net stop MySQL80
+#docker-compose up -d --build
+#ipconfig
+#
+    

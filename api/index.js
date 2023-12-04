@@ -52,6 +52,6 @@ app.use("/api/relationships", relationshipRoutes)
 
 
 
-app.listen(8800, () => {
+app.listen(3001, () => {
     console.log("API working!!")
 });
