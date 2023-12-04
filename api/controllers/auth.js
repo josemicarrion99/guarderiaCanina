@@ -36,8 +36,8 @@ export const login = (req, res) => {
     const query = "SELECT r.*, name, profilePic FROM relationships AS r JOIN users as u ON (u.id = r.followerUserId) WHERE followedUserId = ? ";
 
     db.query(q, [req.body.username], (err, data) => {
-        db.query(query, [data[0].id], (errRelationships, dataRelationships) => {
-            if (errRelationships) return res.status(500).json(errRelationships);
+        if (err) return res.status(500).json(err);
+        if (data.length === 0) return res.status(404).json("Usuario no encontrado");
 
         db.query(query, [data[0].id], (errRelationships, dataRelationships) => {
             if (errRelationships) return res.status(500).json(errRelationships);
