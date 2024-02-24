@@ -52,6 +52,6 @@ networks:
 #netstat -ano
 #net stop MySQL80
 #docker-compose up -d --build
-#ipconfig
-#
+#CMD command to have React run on HTTPS: set HTTPS=true&&set SSL_CRT_FILE=cert.pem&&set SSL_KEY_FILE=key.pem&&npm start
+
     

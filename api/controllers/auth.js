@@ -51,7 +51,7 @@ export const login = (req, res) => {
                     { expiresIn: '1d' });
 
 
-                res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: false, sameSite: 'Lax', maxAge: 24 * 60 * 60 * 1000 }); // call succeeded. what is the name of cookie?
+                res.cookie('refreshToken', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 }); // call succeeded. what is the name of cookie?
 
 
             } else {
@@ -68,15 +68,13 @@ export const login = (req, res) => {
                     { expiresIn: '120m' }
                 );
 
-
-
-
-
                 const { password, ...others } = data[0];
 
                 //creamos la cookie para el usuario que inicie sesion
                 res.cookie("accessToken", token, {
                     httpOnly: true,
+                    sameSite: 'None',
+                    secure: true
                 })
                     .status(200)
                     .json(others);

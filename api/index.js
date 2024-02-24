@@ -1,5 +1,7 @@
 import express from "express";
 const app = express();
+import fs from 'fs';
+import https from 'https';
 import userRoutes from "./routes/users.js"
 import authRoutes from "./routes/auth.js"
 import commentRoutes from "./routes/comments.js"
@@ -20,7 +22,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(cors({
-    origin: "http://localhost:3000",
+    origin: "https://localhost:3000",
 }));
 app.use(cookieParser()) //permite la lectura de la cookie de mi cliente
 
@@ -40,6 +42,11 @@ app.post("/api/upload", upload.single("file"), (req, res) =>{
     res.status(200).json(file.filename);
 })
 
+// Load SSL certificate and private key from the base directory
+const privateKey = fs.readFileSync('key.pem', 'utf8');
+const certificate = fs.readFileSync('cert.pem', 'utf8');
+const credentials = { key: privateKey, cert: certificate };
+
 
 app.use("/api/users", userRoutes)
 app.use("/api/auth", authRoutes)
@@ -51,7 +58,8 @@ app.use("/api/relationships", relationshipRoutes)
 
 
 
+const httpsServer = https.createServer(credentials, app);
 
-app.listen(3001, () => {
-    console.log("API working!!")
+httpsServer.listen(3001, () => {
+    console.log("HTTPS Server running on port 3001");
 });
